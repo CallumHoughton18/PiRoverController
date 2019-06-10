@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:Local="clr-namespace:PiRoverController.XamComponents;assembly=PiRoverController.XamComponents"
+             x:Class="PiRoverController.Views.WifiControlView">
+    <ContentPage.Content>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.9*"></RowDefinition>
+                <RowDefinition Height="0.1*"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Orientation="Horizontal">
+                <Button Text="Left">
+                    <Button.Behaviors>
+                        <Local:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoLeftCommand}"></Local:EventToCommandBehaviour>
+                    </Button.Behaviors>
+                </Button>
+                    <Button Text="Right" Command="{Binding GoRightCommand}"></Button>
+            </StackLayout>
+
+            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Orientation="Vertical" Grid.Column="1">
+                <Button Text="Forward" Command="{Binding GoForwardsCommand}"></Button>
+                <Button Text="Backward" Command="{Binding GoBackwardsCommand}"></Button>
+            </StackLayout>
+
+            <Button Text="Stop" Command="{Binding StopCommand}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Row="1" Grid.ColumnSpan="2"></Button>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
