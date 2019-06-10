@@ -1,7 +1,5 @@
-﻿using PiRoverController.PresentationLogic.Interfaces;
+﻿using PiRoverController.Common.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 

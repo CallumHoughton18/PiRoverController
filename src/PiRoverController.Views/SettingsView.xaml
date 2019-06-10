@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="PiRoverController.Views.SettingsView">
+    <ContentPage.Content>
+        <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.9*"></RowDefinition>
+                <RowDefinition Height="0.1*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ListView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="10,5" HasUnevenRows="True" ItemsSource="{Binding Settings}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Vertical" MinimumHeightRequest="80">
+                                <Label Text="{Binding SettingName}" FontSize="Medium" FontAttributes="Bold" TextColor="Black"/>
+                                <Entry Text="{Binding SettingValue, Mode=TwoWay}" HorizontalOptions="FillAndExpand"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Save Settings" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="1" Command="{Binding SaveSettingsCommand}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

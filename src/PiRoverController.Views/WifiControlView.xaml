@@ -5,7 +5,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:Local="clr-namespace:PiRoverController.XamComponents;assembly=PiRoverController.XamComponents"
-             x:Class="PiRoverController.Views.WifiControlView">
+             x:Class="PiRoverController.Views.WifiControlView"
+             Title="Rover Wifi Control">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Settings" Priority="0" Order="Primary"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -23,15 +27,27 @@
                         <Local:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoLeftCommand}"></Local:EventToCommandBehaviour>
                     </Button.Behaviors>
                 </Button>
-                    <Button Text="Right" Command="{Binding GoRightCommand}"></Button>
+                    <Button Text="Right">
+                    <Button.Behaviors>
+                        <Local:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoRightCommand}"></Local:EventToCommandBehaviour>
+                    </Button.Behaviors>
+                </Button>
             </StackLayout>
 
             <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Orientation="Vertical" Grid.Column="1">
-                <Button Text="Forward" Command="{Binding GoForwardsCommand}"></Button>
-                <Button Text="Backward" Command="{Binding GoBackwardsCommand}"></Button>
+                <Button Text="Forward">
+                    <Button.Behaviors>
+                        <Local:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoForwardsCommand}"></Local:EventToCommandBehaviour>
+                        <Local:EventToCommandBehaviour EventName="Released" Command="{Binding StopForwardsAndBackwardCommand}"></Local:EventToCommandBehaviour>
+                    </Button.Behaviors>
+                </Button>
+                <Button Text="Backward">
+                    <Button.Behaviors>
+                        <Local:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoBackwardsCommand}"></Local:EventToCommandBehaviour>
+                        <Local:EventToCommandBehaviour EventName="Released" Command="{Binding StopForwardsAndBackwardCommand}"></Local:EventToCommandBehaviour>
+                    </Button.Behaviors>
+                </Button>
             </StackLayout>
-
-            <Button Text="Stop" Command="{Binding StopCommand}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Row="1" Grid.ColumnSpan="2"></Button>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 
-namespace PiRoverController.PresentationLogic.Interfaces
+namespace PiRoverController.Common.Interfaces
 {
     public interface ICommandGenerator
     {

@@ -12,16 +12,12 @@ using Xamarin.Forms.Xaml;
 namespace PiRoverController.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class WifiControlView : ContentPage
+    public partial class SettingsView : ContentPage
     {
-        public WifiControlView(ICommandGenerator commandGenerator, ISettingAccess settingAccess)
+        public SettingsView(ISettingAccess settingAccess, ICommandGenerator commandGenerator)
         {
             InitializeComponent();
-            Task.Run(async () =>
-            {
-                var vm = await WifiControllerViewModel.Initialize(commandGenerator, settingAccess);
-                Device.BeginInvokeOnMainThread(() => BindingContext = vm);
-            });
+            BindingContext = SettingsViewModel.InitializeVM(settingAccess, commandGenerator);
         }
     }
 }
