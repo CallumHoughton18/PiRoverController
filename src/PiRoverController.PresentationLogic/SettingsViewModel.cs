@@ -1,18 +1,20 @@
 ﻿using PiRoverController.Common.Interfaces;
 using PiRoverController.Common.Models;
+using PiRoverController.PresentationLogic.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace PiRoverController.PresentationLogic
 {
     public class SettingsViewModel : BaseViewModel
     {
-        public static SettingsViewModel InitializeVM(ISettingAccess settingAccess, ICommandGenerator commandGenerator)
+        public static SettingsViewModel InitializeVM(ISettingAccess settingAccess, ICommandGenerator commandGenerator, INavigationService navigationService)
         {
-            var vm = new SettingsViewModel(settingAccess, commandGenerator);
+            var vm = new SettingsViewModel(settingAccess, commandGenerator, navigationService);
             vm.LoadSettings();
             return vm;
         }
@@ -39,12 +41,12 @@ namespace PiRoverController.PresentationLogic
 
         public ICommand SaveSettingsCommand { get; private set; }
 
-        public SettingsViewModel(ISettingAccess settingAccess, ICommandGenerator commandGenerator)
+        public SettingsViewModel(ISettingAccess settingAccess, ICommandGenerator commandGenerator, INavigationService navigationService) : base(navigationService)
         {
             _settingAccess = settingAccess;
             _commandGenerator = commandGenerator;
 
-            SaveSettingsCommand = _commandGenerator.GenerateCommand(() => SaveSettings(Settings));
+            SaveSettingsCommand = _commandGenerator.GenerateCommand(async () => await SaveSettings(Settings));
         }
 
         public void LoadSettings()
@@ -52,12 +54,14 @@ namespace PiRoverController.PresentationLogic
             Settings = new ObservableCollection<Setting>(_settingAccess.GetSettings());
         }
 
-       private void SaveSettings(IEnumerable<Setting> settings)
+       private async Task SaveSettings(IEnumerable<Setting> settings)
         {
             foreach (var setting in settings)
             {
                 _settingAccess.SaveSetting(setting);
             }
+
+            await _navigationService.PopModalAsync();
         }
     }
 }

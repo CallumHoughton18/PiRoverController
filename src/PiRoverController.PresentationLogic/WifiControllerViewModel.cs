@@ -1,5 +1,6 @@
 ﻿using PiRoverController.Common.Interfaces;
 using PiRoverController.Common.Models;
+using PiRoverController.PresentationLogic.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,9 +15,9 @@ namespace PiRoverController.PresentationLogic
     public class WifiControllerViewModel : BaseViewModel
     {
 
-        public static async Task<WifiControllerViewModel> Initialize(ICommandGenerator commandGenerator, ISettingAccess settingAccess)
+        public static async Task<WifiControllerViewModel> Initialize(ICommandGenerator commandGenerator, ISettingAccess settingAccess, INavigationService navigationService)
         {
-            var vm = new WifiControllerViewModel(commandGenerator, settingAccess);
+            var vm = new WifiControllerViewModel(commandGenerator, settingAccess, navigationService);
             await vm.LoadData();
             return vm;
         }
@@ -30,10 +31,11 @@ namespace PiRoverController.PresentationLogic
         public ICommand GoLeftCommand { get; private set; }
         public ICommand GoRightCommand { get; private set; }
         public ICommand StopForwardsAndBackwardCommand { get; private set; }
+        public ICommand GoToSettingsCommand { get; private set; }
 
         HttpClient _client = new HttpClient();
 
-        public WifiControllerViewModel(ICommandGenerator commandGenerator, ISettingAccess settingAccess)
+        public WifiControllerViewModel(ICommandGenerator commandGenerator, ISettingAccess settingAccess, INavigationService navigationService): base(navigationService)
         {
             _commandGenerator = commandGenerator;
             _settingAccess = settingAccess;
@@ -43,6 +45,12 @@ namespace PiRoverController.PresentationLogic
             GoLeftCommand = _commandGenerator.GenerateCommand(async () => await GoLeft() /*TODO:if already left, reset */);
             GoRightCommand = _commandGenerator.GenerateCommand(async () => await GoRight() /*TODO:if already right, reset */);
             StopForwardsAndBackwardCommand = _commandGenerator.GenerateCommand(async () => await StopForwardsAndBackwards());
+            GoToSettingsCommand = _commandGenerator.GenerateCommand(async () => await GoToSettings());
+        }
+
+        private async Task GoToSettings()
+        {
+            await _navigationService.PushModalSettingsPage();
         }
 
         public async Task LoadData()
@@ -53,7 +61,7 @@ namespace PiRoverController.PresentationLogic
             //Implement clean shutting down of GPIOs?
             _settings = new List<Setting>(_settingAccess.GetSettings());
             _baseUri = new Uri(_settings.Where(x => x.Id == 1).FirstOrDefault().SettingValue);
-            await InitGPIOs();
+            //await InitGPIOs(); //freezes if can't call to server?
         }
 
         private async Task InitGPIOs()

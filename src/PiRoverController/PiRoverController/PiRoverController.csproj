@@ -20,5 +20,6 @@
     <ProjectReference Include="..\..\PiRoverController.PresentationLogic\PiRoverController.PresentationLogic.csproj" />
     <ProjectReference Include="..\..\PiRoverController.SettingAccessSQL\PiRoverController.SettingAccessSQL.csproj" />
     <ProjectReference Include="..\..\PiRoverController.Views\PiRoverController.Views.csproj" />
+    <ProjectReference Include="..\..\PiRoverController.XamComponents\PiRoverController.XamComponents.csproj" />
   </ItemGroup>
 </Project>

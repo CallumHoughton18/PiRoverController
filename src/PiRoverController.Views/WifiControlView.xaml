@@ -8,7 +8,7 @@
              x:Class="PiRoverController.Views.WifiControlView"
              Title="Rover Wifi Control">
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Settings" Priority="0" Order="Primary"/>
+        <ToolbarItem Text="Settings" Priority="0" Order="Primary" Command="{Binding GoToSettingsCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid>

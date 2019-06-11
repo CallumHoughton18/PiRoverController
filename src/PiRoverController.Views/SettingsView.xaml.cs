@@ -1,5 +1,6 @@
 ﻿using PiRoverController.Common.Interfaces;
 using PiRoverController.PresentationLogic;
+using PiRoverController.PresentationLogic.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +15,10 @@ namespace PiRoverController.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SettingsView : ContentPage
     {
-        public SettingsView(ISettingAccess settingAccess, ICommandGenerator commandGenerator)
+        public SettingsView(ISettingAccess settingAccess, ICommandGenerator commandGenerator, INavigationService navigationService)
         {
             InitializeComponent();
-            BindingContext = SettingsViewModel.InitializeVM(settingAccess, commandGenerator);
+            BindingContext = SettingsViewModel.InitializeVM(settingAccess, commandGenerator, navigationService);
         }
     }
 }

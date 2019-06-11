@@ -1,6 +1,8 @@
 ﻿using Ninject;
 using PiRoverController.Common.Interfaces;
 using PiRoverController.Implementations;
+using PiRoverController.PresentationLogic;
+using PiRoverController.PresentationLogic.Interfaces;
 using PiRoverController.SettingAccessSQL;
 using PiRoverController.Views;
 using System;
@@ -12,13 +14,13 @@ namespace PiRoverController
 {
     public partial class App : Application
     {
-        IKernel container;
+        private IKernel _container;
 
         public App()
         {
             InitializeComponent();
-            var settings = new Ninject.NinjectSettings() { LoadExtensions = false };
-            container = new Ninject.StandardKernel(settings);
+            var settings = new NinjectSettings() { LoadExtensions = false };
+            _container = new StandardKernel(settings);
             ConfigureContainer();
             ComposeObjects();
         }
@@ -29,16 +31,20 @@ namespace PiRoverController
             if (Device.RuntimePlatform == Device.UWP) databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "database.db");
             else databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db");
 
-            container.Bind<ICommandGenerator>().To<CommandGenerator>()
+            _container.Bind<ICommandGenerator>().To<CommandGenerator>()
                 .InSingletonScope();
 
-            container.Bind<ISettingAccess>().To<SettingReaderWriterSQL>()
+            _container.Bind<ISettingAccess>().To<SettingReaderWriterSQL>()
                 .WithConstructorArgument<string>(databasePath);
+
+            _container.Bind<INavigationService>().To<NavigationService>()
+                .InSingletonScope()
+                .WithConstructorArgument<IKernel>(_container);
         }
 
         private void ComposeObjects()
         {
-            MainPage = new NavigationPage(container.Get<WifiControlView>());
+            MainPage = new NavigationPage(_container.Get<WifiControlView>());
 
         }
 
