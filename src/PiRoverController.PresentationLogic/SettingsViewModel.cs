@@ -12,15 +12,9 @@ namespace PiRoverController.PresentationLogic
 {
     public class SettingsViewModel : BaseViewModel
     {
-        public static SettingsViewModel InitializeVM(ISettingAccess settingAccess, ICommandGenerator commandGenerator, INavigationService navigationService)
-        {
-            var vm = new SettingsViewModel(settingAccess, commandGenerator, navigationService);
-            vm.LoadSettings();
-            return vm;
-        }
-
         ISettingAccess _settingAccess;
         ICommandGenerator _commandGenerator;
+        private readonly object _syncRoot;
 
         ObservableCollection<Setting> _settings;
         public ObservableCollection<Setting> Settings
@@ -40,13 +34,23 @@ namespace PiRoverController.PresentationLogic
         }
 
         public ICommand SaveSettingsCommand { get; private set; }
+        public ICommand OnAppearingCommand { get; private set; }
 
-        public SettingsViewModel(ISettingAccess settingAccess, ICommandGenerator commandGenerator, INavigationService navigationService) : base(navigationService)
+        public SettingsViewModel(ISettingAccess settingAccess, ICommandGenerator commandGenerator, INavigator INavigator) : base(INavigator)
         {
             _settingAccess = settingAccess;
             _commandGenerator = commandGenerator;
-
             SaveSettingsCommand = _commandGenerator.GenerateCommand(async () => await SaveSettings(Settings));
+            OnAppearingCommand = _commandGenerator.GenerateCommand(() =>
+            {
+                Task.Run(() =>
+                {
+                    lock (_syncRoot)
+                    {
+                        LoadSettings();
+                    }
+                });
+            });
         }
 
         public void LoadSettings()
@@ -61,7 +65,7 @@ namespace PiRoverController.PresentationLogic
                 _settingAccess.SaveSetting(setting);
             }
 
-            await _navigationService.PopModalAsync();
+            await _navigator.PopModalAsync();
         }
     }
 }

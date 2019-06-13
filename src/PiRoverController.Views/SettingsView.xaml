@@ -4,7 +4,11 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             xmlns:Local="clr-namespace:PiRoverController.XamComponents;assembly=PiRoverController.XamComponents"
              x:Class="PiRoverController.Views.SettingsView">
+    <ContentPage.Behaviors>
+        <Local:EventToCommandBehaviour EventName="Appearing" Command="{Binding OnAppearingCommand}"/>
+    </ContentPage.Behaviors>
     <ContentPage.Content>
         <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
             <Grid.RowDefinitions>

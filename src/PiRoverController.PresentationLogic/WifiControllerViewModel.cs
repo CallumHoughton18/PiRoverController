@@ -15,15 +15,10 @@ namespace PiRoverController.PresentationLogic
     public class WifiControllerViewModel : BaseViewModel
     {
 
-        public static async Task<WifiControllerViewModel> Initialize(ICommandGenerator commandGenerator, ISettingAccess settingAccess, INavigationService navigationService)
-        {
-            var vm = new WifiControllerViewModel(commandGenerator, settingAccess, navigationService);
-            await vm.LoadData();
-            return vm;
-        }
-
         private readonly ICommandGenerator _commandGenerator;
         private readonly ISettingAccess _settingAccess;
+        private readonly IHTTPClient _httpClient;
+
         private Uri _baseUri;
         List<Setting> _settings;
         public ICommand GoForwardsCommand { get; private set; }
@@ -32,13 +27,16 @@ namespace PiRoverController.PresentationLogic
         public ICommand GoRightCommand { get; private set; }
         public ICommand StopForwardsAndBackwardCommand { get; private set; }
         public ICommand GoToSettingsCommand { get; private set; }
+        
+        public ICommand OnAppearingCommand { get; private set; }
 
-        HttpClient _client = new HttpClient();
-
-        public WifiControllerViewModel(ICommandGenerator commandGenerator, ISettingAccess settingAccess, INavigationService navigationService): base(navigationService)
+        public WifiControllerViewModel(ICommandGenerator commandGenerator, ISettingAccess settingAccess, INavigator navigator, IHTTPClient httpClient): base(navigator)
         {
             _commandGenerator = commandGenerator;
             _settingAccess = settingAccess;
+            _httpClient = httpClient;
+
+            OnAppearingCommand = _commandGenerator.GenerateCommand(async () => await LoadData());
 
             GoForwardsCommand = _commandGenerator.GenerateCommand(async () => await GoForward());
             GoBackwardsCommand = _commandGenerator.GenerateCommand(async () => await GoBackward());
@@ -50,7 +48,7 @@ namespace PiRoverController.PresentationLogic
 
         private async Task GoToSettings()
         {
-            await _navigationService.PushModalSettingsPage();
+            await _navigator.PushModalAsync<SettingsViewModel>();
         }
 
         public async Task LoadData()
@@ -61,43 +59,46 @@ namespace PiRoverController.PresentationLogic
             //Implement clean shutting down of GPIOs?
             _settings = new List<Setting>(_settingAccess.GetSettings());
             _baseUri = new Uri(_settings.Where(x => x.Id == 1).FirstOrDefault().SettingValue);
+
+            if (_httpClient.HostAvailable(_baseUri))
+                await InitGPIOs();
             //await InitGPIOs(); //freezes if can't call to server?
         }
 
         private async Task InitGPIOs()
         {
             Uri forwardUri = new Uri(_baseUri, _settings.Where(x => x.Id == 2).FirstOrDefault().SettingValue);
-            await _client.GetAsync(forwardUri);
+            await _httpClient.GetAsync(forwardUri);
         }
 
         private async Task GoForward()
         {
             Uri forwardUri = new Uri(_baseUri, _settings.Where(x => x.Id == 3).FirstOrDefault().SettingValue);
-            await _client.GetAsync(forwardUri);
+            await _httpClient.GetAsync(forwardUri);
         }
 
         private async Task GoBackward()
         {
             Uri forwardUri = new Uri(_baseUri, _settings.Where(x => x.Id == 4).FirstOrDefault().SettingValue);
-            await _client.GetAsync(forwardUri);
+            await _httpClient.GetAsync(forwardUri);
         }
 
         private async Task GoLeft()
         {
             Uri forwardUri = new Uri(_baseUri, _settings.Where(x => x.Id == 5).FirstOrDefault().SettingValue);
-            await _client.GetAsync(forwardUri);
+            await _httpClient.GetAsync(forwardUri);
         }
 
         private async Task GoRight()
         {
             Uri forwardUri = new Uri(_baseUri, _settings.Where(x => x.Id == 6).FirstOrDefault().SettingValue);
-            await _client.GetAsync(forwardUri);
+            await _httpClient.GetAsync(forwardUri);
         }
 
         private async Task StopForwardsAndBackwards()
         {
             Uri forwardUri = new Uri(_baseUri, _settings.Where(x => x.Id == 8).FirstOrDefault().SettingValue);
-            await _client.GetAsync(forwardUri);
+            await _httpClient.GetAsync(forwardUri);
         }
     }
 }

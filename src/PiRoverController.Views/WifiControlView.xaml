@@ -7,6 +7,9 @@
              xmlns:Local="clr-namespace:PiRoverController.XamComponents;assembly=PiRoverController.XamComponents"
              x:Class="PiRoverController.Views.WifiControlView"
              Title="Rover Wifi Control">
+    <ContentPage.Behaviors>
+        <Local:EventToCommandBehaviour EventName="Appearing" Command="{Binding OnAppearingCommand}"/>
+    </ContentPage.Behaviors>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Settings" Priority="0" Order="Primary" Command="{Binding GoToSettingsCommand}"/>
     </ContentPage.ToolbarItems>

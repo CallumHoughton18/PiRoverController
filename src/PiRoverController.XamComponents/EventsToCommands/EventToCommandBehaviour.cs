@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace PiRoverController.XamComponents
 {
-    public class EventToCommandBehaviour : BehaviorBase<View>
+    public class EventToCommandBehaviour : BehaviorBase<VisualElement>
     {
         Delegate eventHandler;
 
@@ -39,13 +39,13 @@ namespace PiRoverController.XamComponents
             set { SetValue(InputConverterProperty, value); }
         }
 
-        protected override void OnAttachedTo(View bindable)
+        protected override void OnAttachedTo(VisualElement bindable)
         {
             base.OnAttachedTo(bindable);
             RegisterEvent(EventName);
         }
 
-        protected override void OnDetachingFrom(View bindable)
+        protected override void OnDetachingFrom(VisualElement bindable)
         {
             DeregisterEvent(EventName);
             base.OnDetachingFrom(bindable);

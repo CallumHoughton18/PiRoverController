@@ -15,14 +15,9 @@ namespace PiRoverController.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class WifiControlView : ContentPage
     {
-        public WifiControlView(ICommandGenerator commandGenerator, ISettingAccess settingAccess, INavigationService navigationService)
+        public WifiControlView()
         {
             InitializeComponent();
-            Task.Run(async () =>
-            {
-                var vm = await WifiControllerViewModel.Initialize(commandGenerator, settingAccess, navigationService);
-                Device.BeginInvokeOnMainThread(() => BindingContext = vm);
-            });
         }
     }
 }

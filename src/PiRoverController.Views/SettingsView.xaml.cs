@@ -15,10 +15,9 @@ namespace PiRoverController.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SettingsView : ContentPage
     {
-        public SettingsView(ISettingAccess settingAccess, ICommandGenerator commandGenerator, INavigationService navigationService)
+        public SettingsView()
         {
             InitializeComponent();
-            BindingContext = SettingsViewModel.InitializeVM(settingAccess, commandGenerator, navigationService);
         }
     }
 }

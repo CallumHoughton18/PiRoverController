@@ -9,11 +9,11 @@ namespace PiRoverController.PresentationLogic
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        protected INavigationService _navigationService;
+        protected readonly INavigator _navigator;
 
-        public BaseViewModel(INavigationService navigationService)
+        public BaseViewModel(INavigator navigator)
         {
-            _navigationService = navigationService;
+            _navigator = navigator;
         }
 
         protected virtual void OnPropertyChanged(string propertyName)

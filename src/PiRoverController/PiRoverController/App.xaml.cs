@@ -1,5 +1,6 @@
 ﻿using Ninject;
 using PiRoverController.Common.Interfaces;
+using PiRoverController.Factories;
 using PiRoverController.Implementations;
 using PiRoverController.PresentationLogic;
 using PiRoverController.PresentationLogic.Interfaces;
@@ -37,14 +38,23 @@ namespace PiRoverController
             _container.Bind<ISettingAccess>().To<SettingReaderWriterSQL>()
                 .WithConstructorArgument<string>(databasePath);
 
-            _container.Bind<INavigationService>().To<NavigationService>()
+            _container.Bind<IHTTPClient>().To<HTTPClientService>();
+
+            _container.Bind<IViewFactory>().To<ViewFactory>()
                 .InSingletonScope()
-                .WithConstructorArgument<IKernel>(_container);
+                .WithConstructorArgument(_container);
+
+            _container.Bind<INavigator>().To<Navigator>()
+                .InSingletonScope()
+                .WithConstructorArgument(_container.Get<IViewFactory>());
+
+            _container.Get<IViewFactory>().Register<SettingsViewModel, SettingsView>();
+            _container.Get<IViewFactory>().Register<WifiControllerViewModel, WifiControlView>();
         }
 
         private void ComposeObjects()
         {
-            MainPage = new NavigationPage(_container.Get<WifiControlView>());
+            MainPage = new NavigationPage(_container.Get<IViewFactory>().Resolve<WifiControllerViewModel>());
 
         }
 
