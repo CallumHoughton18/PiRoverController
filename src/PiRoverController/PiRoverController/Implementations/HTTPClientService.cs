@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,12 +25,16 @@ namespace PiRoverController.Implementations
             try
             {
                 pinger = new Ping();
-                PingReply reply = pinger.Send(hostUri.AbsolutePath);
+                PingReply reply = pinger.Send(hostUri.ToString());
                 pingable = reply.Status == IPStatus.Success;
             }
             catch (PingException)
             {
                 // Discard PingExceptions and return false;
+            }
+            catch(SocketException)
+            {
+                
             }
             finally
             {

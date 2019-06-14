@@ -8,4 +8,10 @@
     <PackageReference Include="Xamarin.Forms" Version="3.6.0.344457" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Custom Views\ProgressToast.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
 </Project>

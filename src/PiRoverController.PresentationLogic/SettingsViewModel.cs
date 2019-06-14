@@ -14,7 +14,7 @@ namespace PiRoverController.PresentationLogic
     {
         ISettingAccess _settingAccess;
         ICommandGenerator _commandGenerator;
-        private readonly object _syncRoot;
+        private readonly object _syncRoot = new object();
 
         ObservableCollection<Setting> _settings;
         public ObservableCollection<Setting> Settings

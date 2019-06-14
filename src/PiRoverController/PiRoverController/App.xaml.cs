@@ -40,6 +40,8 @@ namespace PiRoverController
 
             _container.Bind<IHTTPClient>().To<HTTPClientService>();
 
+            _container.Bind<IPopUps>().To<PopUps>();
+
             _container.Bind<IViewFactory>().To<ViewFactory>()
                 .InSingletonScope()
                 .WithConstructorArgument(_container);

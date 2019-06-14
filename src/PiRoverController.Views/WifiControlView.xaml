@@ -51,6 +51,9 @@
                     </Button.Behaviors>
                 </Button>
             </StackLayout>
+            <Local:ProgressToast ProgressToastText="{Binding LoadingMessage}" ProgressToastBackgroundOpacity="0.7" ProgressToastTextColor="WhiteSmoke" ProgressToastBackgroundColor="Black"
+                                 DisplayToast="{Binding LoadingData}"  ProgressToastActivityColor="Blue"
+                                 Grid.ColumnSpan="2" Grid.RowSpan="2" VerticalOptions="End" HorizontalOptions="Fill"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
