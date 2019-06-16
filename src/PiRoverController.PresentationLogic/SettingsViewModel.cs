@@ -14,6 +14,7 @@ namespace PiRoverController.PresentationLogic
     {
         ISettingAccess _settingAccess;
         ICommandGenerator _commandGenerator;
+        IPlatformToast _platformToast;
         private readonly object _syncRoot = new object();
 
         ObservableCollection<Setting> _settings;
@@ -34,22 +35,33 @@ namespace PiRoverController.PresentationLogic
         }
 
         public ICommand SaveSettingsCommand { get; private set; }
-        public ICommand OnAppearingCommand { get; private set; }
 
-        public SettingsViewModel(ISettingAccess settingAccess, ICommandGenerator commandGenerator, INavigator INavigator) : base(INavigator)
+        public SettingsViewModel(ISettingAccess settingAccess, ICommandGenerator commandGenerator, INavigator INavigator, IPlatformToast platformToast) : base(INavigator)
         {
             _settingAccess = settingAccess;
             _commandGenerator = commandGenerator;
-            SaveSettingsCommand = _commandGenerator.GenerateCommand(async () => await SaveSettings(Settings));
-            OnAppearingCommand = _commandGenerator.GenerateCommand(() =>
+            _platformToast = platformToast;
+            SaveSettingsCommand = _commandGenerator.GenerateCommand(async () =>
             {
-                Task.Run(() =>
+                try
                 {
-                    lock (_syncRoot)
-                    {
-                        LoadSettings();
-                    }
-                });
+                    await SaveSettings(Settings);
+                }
+                catch (ArgumentNullException)
+                {
+                    _platformToast.ShowToast("Could not save settings...try again");
+                }
+            });
+        }
+
+        public override void InitialLoad()
+        {
+            Task.Run(() =>
+            {
+                lock (_syncRoot)
+                {
+                    LoadSettings();
+                }
             });
         }
 
@@ -58,8 +70,10 @@ namespace PiRoverController.PresentationLogic
             Settings = new ObservableCollection<Setting>(_settingAccess.GetSettings());
         }
 
-       private async Task SaveSettings(IEnumerable<Setting> settings)
+        private async Task SaveSettings(IEnumerable<Setting> settings)
         {
+            if (settings == null) throw new ArgumentNullException("settings", "cannot be null");
+
             foreach (var setting in settings)
             {
                 _settingAccess.SaveSetting(setting);

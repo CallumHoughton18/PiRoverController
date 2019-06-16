@@ -8,9 +8,9 @@
     <ContentView.Content>
         <Grid>
             <BoxView x:Name="BackgroundBox" CornerRadius="10,10,0,0"/>
-            <FlexLayout x:Name="ProgressToastBackground"  HeightRequest="50" MinimumHeightRequest="50" Margin="5" AlignContent="Center" AlignItems="Center" JustifyContent="Center" Direction="Column">
-                <ActivityIndicator HeightRequest="30" x:Name="ProgressToastIndicator" IsRunning="True" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
-                <Label x:Name="ProgressToastLabel" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Grid.Column="1" LineBreakMode="TailTruncation"/>
+            <FlexLayout x:Name="ProgressToastBackground"  HeightRequest="40" MinimumHeightRequest="40" Margin="5" AlignContent="Center" AlignItems="Center" JustifyContent="Center" Direction="Column">
+                <ActivityIndicator HeightRequest="27" x:Name="ProgressToastIndicator" IsRunning="True" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                <Label x:Name="ProgressToastLabel" VerticalOptions="CenterAndExpand" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" Grid.Column="1" LineBreakMode="TailTruncation"/>
             </FlexLayout>
         </Grid>
     </ContentView.Content>

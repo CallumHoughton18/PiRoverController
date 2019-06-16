@@ -21,7 +21,7 @@ namespace PiRoverController.PresentationLogic
         private readonly ICommandGenerator _commandGenerator;
         private readonly ISettingAccess _settingAccess;
         private readonly IHTTPClient _httpClient;
-        private readonly IPopUps _popUps;
+        private readonly IPlatformToast _popUps;
         private readonly object _roverDirectionLock = new object();
 
         private RoverDirection _currentRoverDirection = RoverDirection.None; //rover should start off motionless.
@@ -85,10 +85,9 @@ namespace PiRoverController.PresentationLogic
         public ICommand GoRightCommand { get; private set; }
         public ICommand StopForwardsAndBackwardCommand { get; private set; }
         public ICommand GoToSettingsCommand { get; private set; }
-        public ICommand OnAppearingCommand { get; private set; }
 
         public WifiControllerViewModel(ICommandGenerator commandGenerator, ISettingAccess settingAccess, INavigator navigator, IHTTPClient httpClient,
-                                       IPopUps popUps) : base(navigator)
+                                       IPlatformToast popUps) : base(navigator)
         {
             _commandGenerator = commandGenerator;
             _settingAccess = settingAccess;
@@ -111,6 +110,11 @@ namespace PiRoverController.PresentationLogic
             GoToSettingsCommand = _commandGenerator.GenerateCommand(async () => await GoToSettings());
         }
 
+        public override void InitialLoad()
+        {
+            //
+        }
+
         private async Task GoToSettings()
         {
             await _navigator.PushModalAsync<SettingsViewModel>();
@@ -120,12 +124,8 @@ namespace PiRoverController.PresentationLogic
         {
             LoadingData = true;
             LoadingMessage = "Loading Setting...";
-            //Implement clean shutting down of GPIOs?
             //Add finished binding message to display when loading data done.
-            //add the resetdirection to go left/right if already on that direction.
-            //Block user input on settingsvm until settings loaded, maybe have as singleton for quicker access?
             //more unit tests.
-            await Task.Delay(4000);
 
             _settings.GetConsumingEnumerable();
             _settings = new BlockingCollection<Setting>();
@@ -152,10 +152,7 @@ namespace PiRoverController.PresentationLogic
             }
 
             LoadingMessage = "Done!";
-            LoadingData = false;;
-
-            //await Task.Delay(3000);
-            //LoadingData = true;
+            LoadingData = false;
         }
 
         private async Task DriveRover(RoverDriverInstructions roverInstruction)
@@ -171,15 +168,10 @@ namespace PiRoverController.PresentationLogic
                         await _httpClient.GetAsync(instructionUri);
                     }
                 }
-                catch (WebException)
+                catch (WebException e)
                 {
-
+                    _popUps.ShowToast($"Request timed out to:{e.Response.ResponseUri.ToString()}");
                 }
-            }
-
-            else
-            {
-                _popUps.ShowToast("Still loading settings...");
             }
         }
 
@@ -210,14 +202,16 @@ namespace PiRoverController.PresentationLogic
                 Setting requiredSetting = GetSettingByID((int)SettingsIDs.InitGPIOs);
                 if (requiredSetting != null)
                 {
-                    Uri initUri = new Uri(_baseUri, requiredSetting.SettingValue);
-                    await _httpClient.GetAsync(initUri);
+                    try
+                    {
+                        Uri initUri = new Uri(_baseUri, requiredSetting.SettingValue);
+                        await _httpClient.GetAsync(initUri);
+                    }
+                    catch (WebException e)
+                    {
+                        _popUps.ShowToast($"Request timed out to:{e.Response.ResponseUri.ToString()}");
+                    }
                 }
-            }
-
-            else
-            {
-                //display still loading message
             }
         }
 

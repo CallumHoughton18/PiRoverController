@@ -13,7 +13,7 @@ namespace PiRoverController.PresentationLogic.Tests
         protected Mock<ISettingAccess> settingAccessMock = new Mock<ISettingAccess>();
         protected Mock<INavigator> navigatorMock = new Mock<INavigator>();
         protected Mock<IHTTPClient> httpClientMock = new Mock<IHTTPClient>();
-        protected Mock<IPopUps> PopUpsMock = new Mock<IPopUps>();
+        protected Mock<IPlatformToast> PopUpsMock = new Mock<IPlatformToast>();
 
         [SetUp]
         public void ResetMocks()
@@ -23,7 +23,7 @@ namespace PiRoverController.PresentationLogic.Tests
             settingAccessMock = new Mock<ISettingAccess>();
             navigatorMock = new Mock<INavigator>();
             httpClientMock = new Mock<IHTTPClient>();
-            PopUpsMock = new Mock<IPopUps>();
+            PopUpsMock = new Mock<IPlatformToast>();
         }
 
 

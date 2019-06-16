@@ -7,9 +7,10 @@ using Xamarin.Forms;
 
 namespace PiRoverController.Factories
 {
-    class ViewFactory : IViewFactory
+    public class ViewFactory : IViewFactory
     {
         private readonly IDictionary<Type, Type> _map = new Dictionary<Type, Type>();
+        private readonly IDictionary<Type,Page> _cachedPages = new Dictionary<Type, Page>();
         IKernel _container;
         public ViewFactory(IKernel container)
         {
@@ -22,9 +23,22 @@ namespace PiRoverController.Factories
             _map[typeof(ViewModel)] = typeof(View);
         }
 
+        public void RegisterAndCache<ViewModel, View>()
+            where ViewModel : BaseViewModel
+            where View : Page
+        {
+            Register<ViewModel, View>();
+            var cachedPage = Resolve<ViewModel>();
+            _cachedPages.Add(typeof(ViewModel),cachedPage);
+        }
+
         public Page Resolve<ViewModel>() where ViewModel : BaseViewModel
         {
+            Page page = null;
+
+            if (_cachedPages.TryGetValue(typeof(ViewModel), out page)) return page;
             var vm = _container.Get<ViewModel>();
+            vm.InitialLoad();
             var vmType = typeof(ViewModel);
 
             Type viewType;
@@ -33,7 +47,7 @@ namespace PiRoverController.Factories
                 throw new InvalidOperationException($"No view mapped to {vmType.FullName}");
             }
 
-            var page = Activator.CreateInstance(viewType) as Page;
+            page = Activator.CreateInstance(viewType) as Page;
             page.BindingContext = vm;
             return page;
         }

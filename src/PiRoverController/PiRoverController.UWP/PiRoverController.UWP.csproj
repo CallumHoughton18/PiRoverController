@@ -95,6 +95,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PlatformToast.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +152,10 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\PiRoverController.Common\PiRoverController.Common.csproj">
+      <Project>{42583234-A8A5-45B2-8BA0-754ADBFA8A8E}</Project>
+      <Name>PiRoverController.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\PiRoverController.PresentationLogic\PiRoverController.PresentationLogic.csproj">
       <Project>{8d276fd7-2fc7-4a9b-bd3d-990a916d6646}</Project>
       <Name>PiRoverController.PresentationLogic</Name>

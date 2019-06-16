@@ -9,55 +9,62 @@ using PiRoverController.Views;
 using System;
 using System.IO;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific.AppCompat;
 using Xamarin.Forms.Xaml;
 
 namespace PiRoverController
 {
-    public partial class App : Application
+    public partial class App : Xamarin.Forms.Application
     {
-        private IKernel _container;
+        public IKernel Container { get; private set; }
 
-        public App()
+        public App(IPlatformToast platformToast)
         {
             InitializeComponent();
+            SetPlatformConfig();
             var settings = new NinjectSettings() { LoadExtensions = false };
-            _container = new StandardKernel(settings);
-            ConfigureContainer();
+            Container = new StandardKernel(settings);
+            ConfigureContainer(platformToast);
             ComposeObjects();
         }
 
-        private void ConfigureContainer()
+        private void ConfigureContainer(IPlatformToast platformToast)
         {
             string databasePath = "";
             if (Device.RuntimePlatform == Device.UWP) databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "database.db");
             else databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "database.db");
 
-            _container.Bind<ICommandGenerator>().To<CommandGenerator>()
+            Container.Bind<IPlatformToast>().ToConstant(platformToast);
+
+            Container.Bind<ICommandGenerator>().To<CommandGenerator>()
                 .InSingletonScope();
 
-            _container.Bind<ISettingAccess>().To<SettingReaderWriterSQL>()
+            Container.Bind<ISettingAccess>().To<SettingReaderWriterSQL>()
                 .WithConstructorArgument<string>(databasePath);
 
-            _container.Bind<IHTTPClient>().To<HTTPClientService>();
+            Container.Bind<IHTTPClient>().To<HTTPClientService>();
 
-            _container.Bind<IPopUps>().To<PopUps>();
-
-            _container.Bind<IViewFactory>().To<ViewFactory>()
+            Container.Bind<IViewFactory>().To<ViewFactory>()
                 .InSingletonScope()
-                .WithConstructorArgument(_container);
+                .WithConstructorArgument(Container);
 
-            _container.Bind<INavigator>().To<Navigator>()
+            Container.Bind<INavigator>().To<Navigator>()
                 .InSingletonScope()
-                .WithConstructorArgument(_container.Get<IViewFactory>());
+                .WithConstructorArgument(Container.Get<IViewFactory>());
 
-            _container.Get<IViewFactory>().Register<SettingsViewModel, SettingsView>();
-            _container.Get<IViewFactory>().Register<WifiControllerViewModel, WifiControlView>();
+            Container.Get<IViewFactory>().Register<WifiControllerViewModel, WifiControlView>();
+            Container.Get<IViewFactory>().RegisterAndCache<SettingsViewModel, SettingsView>();
         }
 
         private void ComposeObjects()
         {
-            MainPage = new NavigationPage(_container.Get<IViewFactory>().Resolve<WifiControllerViewModel>());
+            MainPage = new Xamarin.Forms.NavigationPage(Container.Get<IViewFactory>().Resolve<WifiControllerViewModel>());
+        }
 
+        public void SetPlatformConfig()
+        {
+            this.On<Xamarin.Forms.PlatformConfiguration.Android>().SendAppearingEventOnResume(false);
+            this.On<Xamarin.Forms.PlatformConfiguration.Android>().SendDisappearingEventOnPause(false);
         }
 
         protected override void OnStart()

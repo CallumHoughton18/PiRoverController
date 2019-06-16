@@ -1,0 +1,17 @@
+﻿using PiRoverController.Factories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PiRoverController.Tests
+{
+    public class ViewFactoryTests
+    {
+        //private ViewFactory GenerateViewFactory()
+        //{
+        //   // return new ViewFactory()
+        //}
+    }
+}

@@ -102,8 +102,6 @@ namespace PiRoverController.XamComponents
 
                 if (val == true)
                 {
-                    await Task.Delay(1000);
-
                     control.ProgressToastIndicator.IsRunning = true;
                     control.IsVisible = true;
                     await control.TranslateTo(control._orgXPosition, control._orgYPosition, 800);
@@ -112,7 +110,6 @@ namespace PiRoverController.XamComponents
                 {
                     control.ProgressToastIndicator.IsRunning = false;
 
-                    await Task.Delay(1000);
                     await control.TranslateTo(control._orgXPosition, control._orgYPosition + 1000, 800);
                     control.IsVisible = false;
                 }

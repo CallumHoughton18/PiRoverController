@@ -68,6 +68,7 @@
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
+    <Compile Include="PlatformToast.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +133,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\PiRoverController.Common\PiRoverController.Common.csproj">
+      <Project>{42583234-A8A5-45B2-8BA0-754ADBFA8A8E}</Project>
+      <Name>PiRoverController.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PiRoverController\PiRoverController.csproj">
       <Project>{62AFF7A7-C1C4-4172-B443-E89554D7EC1D}</Project>
       <Name>PiRoverController</Name>
