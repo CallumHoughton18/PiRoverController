@@ -4,11 +4,18 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             xmlns:Local="clr-namespace:PiRoverController.XamComponents;assembly=PiRoverController.XamComponents"
+             xmlns:XamComponents="clr-namespace:PiRoverController.XamComponents;assembly=PiRoverController.XamComponents"
+             xmlns:local="clr-namespace:PiRoverController.Views"
              x:Class="PiRoverController.Views.WifiControlView"
              Title="Rover Wifi Control">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:RoverConnectionToTextConverter x:Key="RoverConnToText"/>
+            <!--=Add XamComponetns to dictionary for easier readability-->
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Behaviors>
-        <Local:EventToCommandBehaviour EventName="Appearing" Command="{Binding OnAppearingCommand}"/>
+        <XamComponents:EventToCommandBehaviour EventName="Appearing" Command="{Binding OnAppearingCommand}"/>
     </ContentPage.Behaviors>
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Settings" Priority="0" Order="Primary" Command="{Binding GoToSettingsCommand}"/>
@@ -20,40 +27,41 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.9*"></RowDefinition>
+                <RowDefinition Height="0.1*"></RowDefinition>
+                <RowDefinition Height="0.8*"></RowDefinition>
                 <RowDefinition Height="0.1*"></RowDefinition>
             </Grid.RowDefinitions>
-
-            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Orientation="Horizontal">
+            <Label Grid.ColumnSpan="2" Text="{Binding RoverConnection,Converter={StaticResource RoverConnToText}}" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" />
+            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Orientation="Horizontal" Grid.Row="1">
                 <Button Text="Left">
                     <Button.Behaviors>
-                        <Local:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoLeftCommand}"></Local:EventToCommandBehaviour>
+                        <XamComponents:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoLeftCommand}"></XamComponents:EventToCommandBehaviour>
                     </Button.Behaviors>
                 </Button>
                     <Button Text="Right">
                     <Button.Behaviors>
-                        <Local:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoRightCommand}"></Local:EventToCommandBehaviour>
+                        <XamComponents:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoRightCommand}"></XamComponents:EventToCommandBehaviour>
                     </Button.Behaviors>
                 </Button>
             </StackLayout>
 
-            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Orientation="Vertical" Grid.Column="1">
+            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Orientation="Vertical" Grid.Column="1" Grid.Row="1">
                 <Button Text="Forward">
                     <Button.Behaviors>
-                        <Local:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoForwardsCommand}"></Local:EventToCommandBehaviour>
-                        <Local:EventToCommandBehaviour EventName="Released" Command="{Binding StopForwardsAndBackwardCommand}"></Local:EventToCommandBehaviour>
+                        <XamComponents:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoForwardsCommand}"></XamComponents:EventToCommandBehaviour>
+                        <XamComponents:EventToCommandBehaviour EventName="Released" Command="{Binding StopForwardsAndBackwardCommand}"></XamComponents:EventToCommandBehaviour>
                     </Button.Behaviors>
                 </Button>
                 <Button Text="Backward">
                     <Button.Behaviors>
-                        <Local:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoBackwardsCommand}"></Local:EventToCommandBehaviour>
-                        <Local:EventToCommandBehaviour EventName="Released" Command="{Binding StopForwardsAndBackwardCommand}"></Local:EventToCommandBehaviour>
+                        <XamComponents:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoBackwardsCommand}"></XamComponents:EventToCommandBehaviour>
+                        <XamComponents:EventToCommandBehaviour EventName="Released" Command="{Binding StopForwardsAndBackwardCommand}"></XamComponents:EventToCommandBehaviour>
                     </Button.Behaviors>
                 </Button>
             </StackLayout>
-            <Local:ProgressToast ProgressToastText="{Binding LoadingMessage}" ProgressToastBackgroundOpacity="0.7" ProgressToastTextColor="WhiteSmoke" ProgressToastBackgroundColor="Black"
+            <XamComponents:ProgressToast ProgressToastText="{Binding LoadingMessage}" ProgressToastBackgroundOpacity="0.7" ProgressToastTextColor="WhiteSmoke" ProgressToastBackgroundColor="Black"
                                  DisplayToast="{Binding LoadingData}"  ProgressToastActivityColor="Blue"
-                                 Grid.ColumnSpan="2" Grid.RowSpan="2" VerticalOptions="End" HorizontalOptions="Fill"/>
+                                 Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" VerticalOptions="End" HorizontalOptions="Fill"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

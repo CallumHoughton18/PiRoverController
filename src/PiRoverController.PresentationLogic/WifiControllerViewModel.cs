@@ -27,6 +27,23 @@ namespace PiRoverController.PresentationLogic
         private RoverDirection _currentRoverDirection = RoverDirection.None; //rover should start off motionless.
         private bool _initLoad = true;
 
+        private RoverConnection _roverConnection = RoverConnection.Not_Detected;
+        public RoverConnection RoverConnection
+        {
+            get
+            {
+                return _roverConnection;
+            }
+            private set
+            {
+                if (_roverConnection != value)
+                {
+                    _roverConnection = value;
+                    OnPropertyChanged(nameof(RoverConnection));
+                }
+            }
+        }
+
         private Uri _baseUri;
         public Uri BaseUri
         {
@@ -149,6 +166,7 @@ namespace PiRoverController.PresentationLogic
             {
                 await InitGPIOs();
                 _initLoad = false;
+                RoverConnection = RoverConnection.Rover_Detected;
             }
 
             LoadingMessage = "Done!";
@@ -216,6 +234,17 @@ namespace PiRoverController.PresentationLogic
                     }
                 }
             }
+        }
+
+        private void SetRoverConnectionStatus()
+        {
+            RoverConnection =  RoverConnection.Trying_To_Connect;
+
+            if (_httpClient.HostAvailable(BaseUri.Host))
+            {
+                RoverConnection = RoverConnection.Rover_Detected;
+            }
+            else RoverConnection = RoverConnection.Not_Detected;
         }
 
         private Setting GetSettingByID(int ID)

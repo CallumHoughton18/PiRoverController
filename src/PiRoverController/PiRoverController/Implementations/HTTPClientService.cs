@@ -19,6 +19,7 @@ namespace PiRoverController.Implementations
 
         public bool HostAvailable(string host)
         {
+            //TODO: Apparently ping system is not compatible on UWP.
             bool pingable = false;
             Ping pinger = null;
 
@@ -28,8 +29,9 @@ namespace PiRoverController.Implementations
                 PingReply reply = pinger.Send(host);
                 pingable = reply.Status == IPStatus.Success;
             }
-            catch (PingException)
+            catch (PingException e)
             {
+                string ex = e.ToString();
             }
             finally
             {
