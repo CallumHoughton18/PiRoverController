@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PiRoverController.Implementations
 {
-    sealed class HTTPClientService : IHTTPClient
+    public class HTTPClientService : IHTTPClient
     {
         private readonly HttpClient _client = new HttpClient();
         public Task<HttpResponseMessage> GetAsync(Uri requestUri)
@@ -17,7 +17,7 @@ namespace PiRoverController.Implementations
             return _client.GetAsync(requestUri);
         }
 
-        public bool HostAvailable(Uri hostUri)
+        public bool HostAvailable(string host)
         {
             bool pingable = false;
             Ping pinger = null;
@@ -25,16 +25,11 @@ namespace PiRoverController.Implementations
             try
             {
                 pinger = new Ping();
-                PingReply reply = pinger.Send(hostUri.ToString());
+                PingReply reply = pinger.Send(host);
                 pingable = reply.Status == IPStatus.Success;
             }
             catch (PingException)
             {
-                // Discard PingExceptions and return false;
-            }
-            catch(SocketException)
-            {
-                
             }
             finally
             {

@@ -16,7 +16,7 @@ namespace PiRoverController.PresentationLogic.Tests
         public async Task GPIOInited_When_PingSuccess()
         {
             var expectedUri = new Uri("http://192.168.0.22:8080/RoverControls/initGPIO");
-            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(true);
+            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<string>())).Returns(true);
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
             var sut = CreateViewModel();
 
@@ -28,7 +28,7 @@ namespace PiRoverController.PresentationLogic.Tests
         [Test]
         public async Task GPIONotInited_When_PingSuccess()
         {
-            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(false);
+            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<string>())).Returns(false);
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
             var sut = CreateViewModel();
 
@@ -58,7 +58,7 @@ namespace PiRoverController.PresentationLogic.Tests
         [Test]
         public async Task GoForwardTest_Valid()
         {
-            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(true);
+            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<string>())).Returns(true);
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
             var expectedUri = new Uri("http://192.168.0.22:8080/RoverControls/forward");
             var sut = CreateViewModel();
@@ -72,7 +72,7 @@ namespace PiRoverController.PresentationLogic.Tests
         [Test]
         public async Task GoBackTest_Valid()
         {
-            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(true);
+            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<string>())).Returns(true);
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
             var expectedUri = new Uri("http://192.168.0.22:8080/RoverControls/backward");
             var sut = CreateViewModel();
@@ -86,7 +86,7 @@ namespace PiRoverController.PresentationLogic.Tests
         [Test]
         public async Task GoLeftTest_Valid()
         {
-            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(true);
+            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<string>())).Returns(true);
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
             var expectedUri = new Uri("http://192.168.0.22:8080/RoverControls/left");
             var sut = CreateViewModel();
@@ -100,7 +100,7 @@ namespace PiRoverController.PresentationLogic.Tests
         [Test]
         public async Task GoRightTest_Valid()
         {
-            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(true);
+            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<string>())).Returns(true);
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
             var expectedUri = new Uri("http://192.168.0.22:8080/RoverControls/right");
             var sut = CreateViewModel();
@@ -114,7 +114,7 @@ namespace PiRoverController.PresentationLogic.Tests
         [Test]
         public async Task StopForwardAndBackward_Valid()
         {
-            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(true);
+            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<string>())).Returns(true);
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
             var expectedUri = new Uri("http://192.168.0.22:8080/RoverControls/stopForwardAndBackward");
             var sut = CreateViewModel();
@@ -128,7 +128,7 @@ namespace PiRoverController.PresentationLogic.Tests
         [Test]
         public async Task ResetDirectionLeft_Valid()
         {
-            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(true);
+            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<string>())).Returns(true);
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
             var expectedUri = new Uri("http://192.168.0.22:8080/RoverControls/left");
             var expectedResetUri = new Uri("http://192.168.0.22:8080/RoverControls/stopLeftAndRight");
@@ -147,7 +147,7 @@ namespace PiRoverController.PresentationLogic.Tests
         [Test]
         public async Task ResetDirectionRight_Valid()
         {
-            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(true);
+            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<string>())).Returns(true);
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
             var expectedUri = new Uri("http://192.168.0.22:8080/RoverControls/right");
             var expectedResetUri = new Uri("http://192.168.0.22:8080/RoverControls/stopLeftAndRight");

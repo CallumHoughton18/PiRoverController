@@ -145,7 +145,7 @@ namespace PiRoverController.PresentationLogic
             _baseUri = new Uri(baseURLSetting.SettingValue);
 
 
-            if (_initLoad && _httpClient.HostAvailable(_baseUri))
+            if (_initLoad && _httpClient.HostAvailable(_baseUri.Host))
             {
                 await InitGPIOs();
                 _initLoad = false;
@@ -159,21 +159,24 @@ namespace PiRoverController.PresentationLogic
         {
             if (_settings.IsAddingCompleted && _baseUri != null)
             {
-                try
+
+                Setting requiredSetting = GetSettingByID((int)roverInstruction);
+                if (requiredSetting != null)
                 {
-                    Setting requiredSetting = GetSettingByID((int)roverInstruction);
-                    if (requiredSetting != null)
+                    try
                     {
                         Uri instructionUri = new Uri(_baseUri, requiredSetting.SettingValue);
                         await _httpClient.GetAsync(instructionUri);
                     }
-                }
-                catch (WebException e)
-                {
-                    _popUps.ShowToast($"Request timed out to:{e.Response.ResponseUri.ToString()}");
+                    catch (HttpRequestException)
+                    {
+                        _popUps.ShowToast($"Request failed to:{requiredSetting.SettingValue}");
+                    }
                 }
             }
+
         }
+
 
         private async Task SetRoverDirection(RoverDriverInstructions roverInstruction, RoverDirection requestedDirection)
         {

@@ -22,4 +22,8 @@
     <ProjectReference Include="..\..\PiRoverController.Views\PiRoverController.Views.csproj" />
     <ProjectReference Include="..\..\PiRoverController.XamComponents\PiRoverController.XamComponents.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
 </Project>

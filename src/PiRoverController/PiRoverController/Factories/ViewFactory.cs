@@ -10,8 +10,13 @@ namespace PiRoverController.Factories
     public class ViewFactory : IViewFactory
     {
         private readonly IDictionary<Type, Type> _map = new Dictionary<Type, Type>();
+        public IDictionary<Type, Type> Map { get { return _map; } }
+
         private readonly IDictionary<Type,Page> _cachedPages = new Dictionary<Type, Page>();
+        public IDictionary<Type, Page> CachedPages { get { return _cachedPages; } }
+
         IKernel _container;
+
         public ViewFactory(IKernel container)
         {
             _container = container;
