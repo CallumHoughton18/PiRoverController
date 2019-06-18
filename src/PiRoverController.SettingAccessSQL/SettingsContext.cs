@@ -14,7 +14,6 @@ namespace PiRoverController.SettingAccessSQL
     {
         public SettingsContext(DbContextOptions<SettingsContext> options): base(options)
         {
-            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

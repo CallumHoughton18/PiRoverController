@@ -17,6 +17,17 @@ namespace PiRoverController.SettingAccessSQL
             var optionsBuilder = new DbContextOptionsBuilder<SettingsContext>();
             optionsBuilder.UseSqlite($"Filename={databasePath}");
             options = optionsBuilder.Options;
+
+            CreateDBIfNotExist();
+        }
+
+        public void CreateDBIfNotExist()
+        {
+            using (var context = new SettingsContext(options))
+            {
+                //No migrations, but settings shouldnt really change for such a small application.
+                context.Database.EnsureCreated();
+            }
         }
 
         public IEnumerable<Setting> GetSettings()
