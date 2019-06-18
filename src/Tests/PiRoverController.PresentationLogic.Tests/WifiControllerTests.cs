@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PiRoverController.PresentationLogic.Tests
 {
@@ -56,6 +57,28 @@ namespace PiRoverController.PresentationLogic.Tests
                 Assert.That(sut.Settings.ElementAt(i).SettingType, Is.EqualTo(mockSettings[i].SettingType));
                 Assert.That(sut.Settings.ElementAt(i).SettingValue, Is.EqualTo(mockSettings[i].SettingValue));
             }
+        }
+
+        [Test]
+        public void DriveRover_WhileAttemptingToConnect()
+        {
+            var mockSettings = TestHelper.GetMockSettingsData().ToList();
+            settingAccessMock.Setup(x => x.GetSettings()).Returns(mockSettings);
+
+            var sut = CreateViewModel();
+            sut.OnAppearingCommand.Execute(null);
+            sut.RoverConnection = RoverConnection.Trying_To_Connect;
+
+            sut.GoForwardsCommand.Execute(null);
+            sut.GoBackwardsCommand.Execute(null);
+            sut.GoLeftCommand.Execute(null);
+            sut.GoLeftCommand.Execute(null);
+            sut.GoRightCommand.Execute(null);
+            sut.GoRightCommand.Execute(null);
+            sut.StopForwardsAndBackwardCommand.Execute(null);
+
+            PopUpsMock.Verify(x => x.ShowToast("Cannot Drive - Trying to Connect to Rover"), Times.Exactly(7));
+            httpClientMock.Verify(x => x.GetAsync(It.IsAny<Uri>()), Times.Never);
         }
 
         [Test]

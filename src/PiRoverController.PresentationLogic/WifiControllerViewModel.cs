@@ -21,7 +21,7 @@ namespace PiRoverController.PresentationLogic
         private readonly ICommandGenerator _commandGenerator;
         private readonly ISettingAccess _settingAccess;
         private readonly IHTTPClient _httpClient;
-        private readonly IPlatformToast _popUps;
+        private readonly IPlatformToast _platformToast;
         private readonly object _roverDirectionLock = new object();
 
         private RoverDirection _currentRoverDirection = RoverDirection.None; //rover should start off motionless.
@@ -34,7 +34,7 @@ namespace PiRoverController.PresentationLogic
             {
                 return _roverConnection;
             }
-            private set
+            set
             {
                 if (_roverConnection != value)
                 {
@@ -105,16 +105,24 @@ namespace PiRoverController.PresentationLogic
         public ICommand GoToSettingsCommand { get; private set; }
 
         public WifiControllerViewModel(ICommandGenerator commandGenerator, ISettingAccess settingAccess, INavigator navigator, IHTTPClient httpClient,
-                                       IPlatformToast popUps) : base(navigator)
+                                       IPlatformToast platformToast) : base(navigator)
         {
             _commandGenerator = commandGenerator;
             _settingAccess = settingAccess;
             _httpClient = httpClient;
-            _popUps = popUps;
+            _platformToast = platformToast;
 
+            InitializeCommands();
+        }
+
+        private void InitializeCommands()
+        {
             OnAppearingCommand = _commandGenerator.GenerateCommand(async () =>
             {
-                LoadSettings();
+                //possible here, if on appearing fails, display alert about incorrect settings configuration THEN crash the app. 
+                //or just add global unhandled exception handler to each platform.
+
+                OnAppearingLoad();
                 if (_initLoad)
                 {
                     await InitializeRover();
@@ -146,7 +154,7 @@ namespace PiRoverController.PresentationLogic
             await _navigator.PushModalAsync<SettingsViewModel>();
         }
 
-        private void LoadSettings()
+        private void OnAppearingLoad()
         {
             SetLoadingMessage("Loading Settings...", true);
             //Add finished binding message to display when loading data done.
@@ -162,7 +170,6 @@ namespace PiRoverController.PresentationLogic
 
             _settings.CompleteAdding();
 
-            //change this
             var baseURLSetting = GetSettingByID((int)SettingsIDs.BaseURL);
 
             if (baseURLSetting == null) throw new NullReferenceException("Base URL Setting not found...app will not be functional");
@@ -193,7 +200,7 @@ namespace PiRoverController.PresentationLogic
 
         private async Task DriveRover(RoverDriverInstructions roverInstruction)
         {
-            if (_settings.IsAddingCompleted && _baseUri != null)
+            if (_settings.IsAddingCompleted && _baseUri != null && RoverConnection != RoverConnection.Trying_To_Connect)
             {
 
                 Setting requiredSetting = GetSettingByID((int)roverInstruction);
@@ -208,11 +215,12 @@ namespace PiRoverController.PresentationLogic
                     }
                     catch (HttpRequestException)
                     {
-                        _popUps.ShowToast($"Request failed to: {instructionUri.ToString()}");
+                        _platformToast.ShowToast($"Request failed to: {instructionUri.ToString()}");
                     }
                 }
             }
-            else if (_settings.IsAddingCompleted == false) _popUps.ShowToast("Still Loading Server Endpoints, Try Again.");
+            else if (_settings.IsAddingCompleted == false) _platformToast.ShowToast("Still Loading Server Endpoints, Try Again.");
+            else if (RoverConnection == RoverConnection.Trying_To_Connect) _platformToast.ShowToast("Cannot Drive - Trying to Connect to Rover");
 
         }
 
@@ -251,7 +259,7 @@ namespace PiRoverController.PresentationLogic
                     }
                     catch (HttpRequestException)
                     {
-                        _popUps.ShowToast($"Request failed to:{requiredSetting.SettingValue}"); //settings value is base uri tostring value.
+                        _platformToast.ShowToast($"Request failed to:{requiredSetting.SettingValue}"); //settings value is base uri tostring value.
                     }
                 }
             }
@@ -266,6 +274,7 @@ namespace PiRoverController.PresentationLogic
                 if (await _httpClient.HostAvailable(BaseUri))
                 {
                     RoverConnection = RoverConnection.Rover_Detected;
+                    await InitGPIOs();
                 }
                 else RoverConnection = RoverConnection.Not_Detected;
             }
