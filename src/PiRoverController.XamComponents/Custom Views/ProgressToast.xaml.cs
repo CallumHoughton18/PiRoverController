@@ -104,13 +104,13 @@ namespace PiRoverController.XamComponents
                 {
                     control.ProgressToastIndicator.IsRunning = true;
                     control.IsVisible = true;
-                    await control.TranslateTo(control._orgXPosition, control._orgYPosition, 800);
+                    await control.TranslateTo(control._orgXPosition, control._orgYPosition + 3, 800);
                 }
                 else
                 {
                     control.ProgressToastIndicator.IsRunning = false;
 
-                    await control.TranslateTo(control._orgXPosition, control._orgYPosition + 1000, 800);
+                    await control.TranslateTo(control._orgXPosition, control._orgYPosition + 1000, 1600);
                     control.IsVisible = false;
                 }
 
@@ -125,7 +125,7 @@ namespace PiRoverController.XamComponents
             Device.BeginInvokeOnMainThread(async () =>
             {
                 this.IsVisible = false;
-                await this.TranslateTo(_orgXPosition, _orgYPosition + 1000, 1);
+                await this.TranslateTo(_orgXPosition, _orgYPosition + 1000, 1); //hide and init for pop in animation.s
             });
         }
     }

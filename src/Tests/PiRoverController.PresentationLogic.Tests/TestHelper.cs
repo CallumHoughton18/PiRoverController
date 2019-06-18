@@ -1,10 +1,12 @@
-﻿using PiRoverController.Common.Enums;
+﻿using Moq;
+using PiRoverController.Common.Enums;
 using PiRoverController.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PiRoverController.PresentationLogic.Tests
 {

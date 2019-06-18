@@ -13,8 +13,8 @@ namespace PiRoverController.Implementations
 {
     public class HTTPClientService : IHTTPClient
     {
-        IPingConnection _platformPingConnection;
-        public HTTPClientService(IPingConnection pingConnection)
+        IServerConnection _platformPingConnection;
+        public HTTPClientService(IServerConnection pingConnection)
         {
             _platformPingConnection = pingConnection;
         }

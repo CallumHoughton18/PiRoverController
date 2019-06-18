@@ -23,7 +23,7 @@ namespace PiRoverController
         {
         }
 
-        public App(IPlatformToast platformToast, IPingConnection pingConnection)
+        public App(IPlatformToast platformToast, IServerConnection pingConnection)
         {
             InitializeComponent();
             SetPlatformConfig();
@@ -33,7 +33,7 @@ namespace PiRoverController
             ComposeObjects();
         }
 
-        private void ConfigureContainer(IPlatformToast platformToast, IPingConnection pingConnection)
+        private void ConfigureContainer(IPlatformToast platformToast, IServerConnection pingConnection)
         {
             string databasePath = "";
             if (Device.RuntimePlatform == Device.UWP) databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "database.db");
@@ -41,7 +41,7 @@ namespace PiRoverController
 
             Container.Bind<IPlatformToast>().ToConstant(platformToast);
 
-            Container.Bind<IPingConnection>().ToConstant(pingConnection);
+            Container.Bind<IServerConnection>().ToConstant(pingConnection);
 
             Container.Bind<ICommandGenerator>().To<CommandGenerator>()
                 .InSingletonScope();
@@ -49,7 +49,7 @@ namespace PiRoverController
             Container.Bind<ISettingAccess>().To<SettingReaderWriterSQL>()
                 .WithConstructorArgument<string>(databasePath);
 
-            Container.Bind<IHTTPClient>().To<HTTPClientService>().WithConstructorArgument("pingConnection", Container.Get<IPingConnection>());
+            Container.Bind<IHTTPClient>().To<HTTPClientService>().WithConstructorArgument("pingConnection", Container.Get<IServerConnection>());
 
             Container.Bind<IViewFactory>().To<ViewFactory>()
                 .InSingletonScope()

@@ -1,6 +1,7 @@
 ﻿using Moq;
 using NUnit.Framework;
 using PiRoverController.Common;
+using PiRoverController.Common.Enums;
 using PiRoverController.Common.Models;
 using System;
 using System.Collections;
@@ -13,7 +14,7 @@ namespace PiRoverController.PresentationLogic.Tests
     public class WifiControllerTests : BaseTests
     {
         [Test]
-        public async Task GPIOInited_When_PingSuccess()
+        public void GPIOInited_When_PingSuccess()
         {
             var expectedUri = new Uri("http://192.168.0.22:8080/RoverControls/initGPIO");
             httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult<bool>(true));
@@ -22,13 +23,11 @@ namespace PiRoverController.PresentationLogic.Tests
 
            sut.OnAppearingCommand.Execute(null);
 
-           await Task.Delay(50);
-
             httpClientMock.Verify(x => x.GetAsync(expectedUri), Times.Once);
         }
 
         [Test]
-        public async Task GPIONotInited_When_PingSuccess()
+        public void GPIONotInited_When_PingSuccess()
         {
             httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult<bool>(false));
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
@@ -36,13 +35,12 @@ namespace PiRoverController.PresentationLogic.Tests
 
             sut.OnAppearingCommand.Execute(null);
 
-            await Task.Delay(50);
 
             httpClientMock.Verify(x => x.GetAsync(It.IsAny<Uri>()), Times.Never);
         }
 
         [Test]
-        public async Task RetrieveSettings()
+        public void RetrieveSettings()
         {
             var mockSettings = TestHelper.GetMockSettingsData().ToList();
             settingAccessMock.Setup(x => x.GetSettings()).Returns(mockSettings);
@@ -50,7 +48,6 @@ namespace PiRoverController.PresentationLogic.Tests
 
             sut.OnAppearingCommand.Execute(null);
 
-            await Task.Delay(50);
 
             for (int i = 0; i < sut.Settings.Count; i++)
             {
@@ -62,7 +59,7 @@ namespace PiRoverController.PresentationLogic.Tests
         }
 
         [Test]
-        public async Task GoForwardTest_Valid()
+        public void GoForwardTest_Valid()
         {
             httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult<bool>(true));
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
@@ -70,15 +67,13 @@ namespace PiRoverController.PresentationLogic.Tests
             var sut = CreateViewModel();
             sut.OnAppearingCommand.Execute(null);
 
-            await Task.Delay(50);
-
             sut.GoForwardsCommand.Execute(null);
 
             httpClientMock.Verify(x => x.GetAsync(expectedUri), Times.Once);
         }
 
         [Test]
-        public async Task GoBackTest_Valid()
+        public void GoBackTest_Valid()
         {
             httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult<bool>(true));
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
@@ -86,15 +81,13 @@ namespace PiRoverController.PresentationLogic.Tests
             var sut = CreateViewModel();
             sut.OnAppearingCommand.Execute(null);
 
-            await Task.Delay(50);
-
             sut.GoBackwardsCommand.Execute(null);
 
             httpClientMock.Verify(x => x.GetAsync(expectedUri), Times.Once);
         }
 
         [Test]
-        public async Task GoLeftTest_Valid()
+        public void GoLeftTest_Valid()
         {
             httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult<bool>(true));
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
@@ -102,15 +95,13 @@ namespace PiRoverController.PresentationLogic.Tests
             var sut = CreateViewModel();
             sut.OnAppearingCommand.Execute(null);
 
-            await Task.Delay(50);
-
             sut.GoLeftCommand.Execute(null);
 
             httpClientMock.Verify(x => x.GetAsync(expectedUri), Times.Once);
         }
 
         [Test]
-        public async Task GoRightTest_Valid()
+        public void GoRightTest_Valid()
         {
             httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult<bool>(true));
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
@@ -118,15 +109,13 @@ namespace PiRoverController.PresentationLogic.Tests
             var sut = CreateViewModel();
             sut.OnAppearingCommand.Execute(null);
 
-            await Task.Delay(50);
-
             sut.GoRightCommand.Execute(null);
 
             httpClientMock.Verify(x => x.GetAsync(expectedUri), Times.Once);
         }
 
         [Test]
-        public async Task StopForwardAndBackward_Valid()
+        public void StopForwardAndBackward_Valid()
         {
             httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult<bool>(true));
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
@@ -134,15 +123,13 @@ namespace PiRoverController.PresentationLogic.Tests
             var sut = CreateViewModel();
             sut.OnAppearingCommand.Execute(null);
 
-            await Task.Delay(50);
-
             sut.StopForwardsAndBackwardCommand.Execute(null);
 
             httpClientMock.Verify(x => x.GetAsync(expectedUri), Times.Once);
         }
 
         [Test]
-        public async Task ResetDirectionLeft_Valid()
+        public void ResetDirectionLeft_Valid()
         {
             httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult<bool>(true));
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
@@ -151,8 +138,6 @@ namespace PiRoverController.PresentationLogic.Tests
             var sut = CreateViewModel();
             sut.OnAppearingCommand.Execute(null);
 
-            await Task.Delay(50);
-
             sut.GoLeftCommand.Execute(null);
 
             httpClientMock.Verify(x => x.GetAsync(expectedUri), Times.Once);
@@ -163,7 +148,7 @@ namespace PiRoverController.PresentationLogic.Tests
         }
 
         [Test]
-        public async Task ResetDirectionRight_Valid()
+        public void ResetDirectionRight_Valid()
         {
             httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult<bool>(true));
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
@@ -172,8 +157,6 @@ namespace PiRoverController.PresentationLogic.Tests
             var sut = CreateViewModel();
             sut.OnAppearingCommand.Execute(null);
 
-            await Task.Delay(50);
-
             sut.GoRightCommand.Execute(null);
 
             httpClientMock.Verify(x => x.GetAsync(expectedUri), Times.Once);
@@ -181,6 +164,32 @@ namespace PiRoverController.PresentationLogic.Tests
             sut.GoRightCommand.Execute(null);
 
             httpClientMock.Verify(x => x.GetAsync(expectedResetUri), Times.Once);
+        }
+
+        [Test]
+        public void CheckRoverConnection_ConnectionAvailable()
+        {
+            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult<bool>(true));
+            settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
+            var sut = CreateViewModel();
+            sut.OnAppearingCommand.Execute(null);
+
+            sut.CheckRoverConnectionCommand.Execute(null);
+
+            Assert.That(sut.RoverConnection, Is.EqualTo(RoverConnection.Rover_Detected));
+        }
+
+        [Test]
+        public void CheckRoverConnection_ConnectionUnavailable()
+        {
+            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult<bool>(false));
+            settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
+            var sut = CreateViewModel();
+            sut.OnAppearingCommand.Execute(null);
+
+            sut.CheckRoverConnectionCommand.Execute(null);
+
+            Assert.That(sut.RoverConnection, Is.EqualTo(RoverConnection.Not_Detected));
         }
 
         private WifiControllerViewModel CreateViewModel()

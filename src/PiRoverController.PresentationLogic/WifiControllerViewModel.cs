@@ -101,6 +101,7 @@ namespace PiRoverController.PresentationLogic
         public ICommand GoLeftCommand { get; private set; }
         public ICommand GoRightCommand { get; private set; }
         public ICommand StopForwardsAndBackwardCommand { get; private set; }
+        public ICommand CheckRoverConnectionCommand { get; private set; }
         public ICommand GoToSettingsCommand { get; private set; }
 
         public WifiControllerViewModel(ICommandGenerator commandGenerator, ISettingAccess settingAccess, INavigator navigator, IHTTPClient httpClient,
@@ -134,12 +135,12 @@ namespace PiRoverController.PresentationLogic
             });
             StopForwardsAndBackwardCommand = _commandGenerator.GenerateCommand(async () => await DriveRover(RoverDriverInstructions.StopFowardsAndBackwards));
             GoToSettingsCommand = _commandGenerator.GenerateCommand(async () => await GoToSettings());
+            CheckRoverConnectionCommand = _commandGenerator.GenerateCommand(async () => await SetRoverConnectionStatus());
         }
 
         public override void InitialLoad()
         {
         }
-
         private async Task GoToSettings()
         {
             await _navigator.PushModalAsync<SettingsViewModel>();
@@ -147,8 +148,7 @@ namespace PiRoverController.PresentationLogic
 
         private void LoadSettings()
         {
-            LoadingData = true;
-            LoadingMessage = "Loading Setting...";
+            SetLoadingMessage("Loading Settings...", true);
             //Add finished binding message to display when loading data done.
             //more unit tests.
 
@@ -169,30 +169,25 @@ namespace PiRoverController.PresentationLogic
 
             _baseUri = new Uri(baseURLSetting.SettingValue);
 
-            LoadingMessage = "Done!";
-            LoadingData = false;
+            SetLoadingMessage("Done!", false);
         }
 
         private async Task InitializeRover()
         {
             RoverConnection = RoverConnection.Trying_To_Connect;
-            LoadingMessage = "Setting Up Rover...";
-            LoadingData = true;
+            SetLoadingMessage("Setting Up Rover...", true);
 
             var hostAvailable = await _httpClient.HostAvailable(_baseUri);
             if (hostAvailable)
             {
                 await InitGPIOs();
                 RoverConnection = RoverConnection.Rover_Detected;
-                LoadingMessage = "Rover Connected!";
-                LoadingData = false;
+                SetLoadingMessage("Rover Connected!", false);
             }
             else
             {
                 RoverConnection = RoverConnection.Not_Detected;
-                await Task.Delay(1000);
-                LoadingMessage = "Rover Not Found :(";
-                LoadingData = false;
+                SetLoadingMessage("No Rover Found:(", false);
             }
         }
 
@@ -202,19 +197,22 @@ namespace PiRoverController.PresentationLogic
             {
 
                 Setting requiredSetting = GetSettingByID((int)roverInstruction);
+                Uri instructionUri = null;
+
                 if (requiredSetting != null)
                 {
                     try
                     {
-                        Uri instructionUri = new Uri(_baseUri, requiredSetting.SettingValue);
+                        instructionUri = new Uri(_baseUri, requiredSetting.SettingValue);
                         await _httpClient.GetAsync(instructionUri);
                     }
                     catch (HttpRequestException)
                     {
-                        _popUps.ShowToast($"Request failed to:{requiredSetting.SettingValue}");
+                        _popUps.ShowToast($"Request failed to: {instructionUri.ToString()}");
                     }
                 }
             }
+            else if (_settings.IsAddingCompleted == false) _popUps.ShowToast("Still Loading Server Endpoints, Try Again.");
 
         }
 
@@ -253,7 +251,7 @@ namespace PiRoverController.PresentationLogic
                     }
                     catch (HttpRequestException)
                     {
-                        _popUps.ShowToast($"Request failed to:{requiredSetting.SettingValue}");
+                        _popUps.ShowToast($"Request failed to:{requiredSetting.SettingValue}"); //settings value is base uri tostring value.
                     }
                 }
             }
@@ -261,18 +259,28 @@ namespace PiRoverController.PresentationLogic
 
         private async Task SetRoverConnectionStatus()
         {
-            RoverConnection = RoverConnection.Trying_To_Connect;
-
-            if (await _httpClient.HostAvailable(BaseUri))
+            if (RoverConnection != RoverConnection.Trying_To_Connect)
             {
-                RoverConnection = RoverConnection.Rover_Detected;
+                RoverConnection = RoverConnection.Trying_To_Connect;
+
+                if (await _httpClient.HostAvailable(BaseUri))
+                {
+                    RoverConnection = RoverConnection.Rover_Detected;
+                }
+                else RoverConnection = RoverConnection.Not_Detected;
             }
-            else RoverConnection = RoverConnection.Not_Detected;
         }
 
         private Setting GetSettingByID(int ID)
         {
             return _settings.Where(x => x.Id == ID).FirstOrDefault();
+        }
+
+        private void SetLoadingMessage(string message, bool display)
+        {
+            LoadingMessage = message;
+            LoadingData = display;
+
         }
     }
 }

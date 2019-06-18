@@ -11,6 +11,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:RoverConnectionToTextConverter x:Key="RoverConnToText"/>
+            <local:RoverConnectionToColourConverter x:Key="RoverConnToColour"/>
             <!--=Add XamComponetns to dictionary for easier readability-->
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -31,7 +32,11 @@
                 <RowDefinition Height="0.8*"></RowDefinition>
                 <RowDefinition Height="0.1*"></RowDefinition>
             </Grid.RowDefinitions>
-            <Label Grid.ColumnSpan="2" Text="{Binding RoverConnection,Converter={StaticResource RoverConnToText}}" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" />
+            <FlexLayout JustifyContent="SpaceEvenly" AlignItems="Start" Direction="Row">
+                <Label Grid.ColumnSpan="2" Text="{Binding RoverConnection,Converter={StaticResource RoverConnToText}}"  TextColor="{Binding RoverConnection,Converter= {StaticResource RoverConnToColour}}"
+                   HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" />
+                <Button Command="{Binding CheckRoverConnectionCommand}" Text="Ping"></Button>
+            </FlexLayout>
             <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Orientation="Horizontal" Grid.Row="1">
                 <Button Text="Left">
                     <Button.Behaviors>

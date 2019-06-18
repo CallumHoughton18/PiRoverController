@@ -8,5 +8,7 @@ namespace PiRoverController.Common.Interfaces
     public interface ICommandGenerator
     {
         ICommand GenerateCommand(Action action);
+
+        ICommand GenerateCommand(Action action, Func<bool> canExecute);
     }
 }

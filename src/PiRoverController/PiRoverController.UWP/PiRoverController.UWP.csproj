@@ -95,7 +95,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PingSolution.cs" />
+    <Compile Include="ServerConnection.cs" />
     <Compile Include="PlatformToast.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

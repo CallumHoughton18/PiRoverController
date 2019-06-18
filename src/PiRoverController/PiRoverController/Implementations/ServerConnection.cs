@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PiRoverController.Implementations
 {
-    public class ServerConnection : IPingConnection
+    public class ServerConnection : IServerConnection
     {
         public async Task<bool> ConnectToServer(Uri serverUri)
         {

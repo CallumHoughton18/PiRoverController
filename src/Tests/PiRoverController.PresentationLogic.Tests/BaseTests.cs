@@ -18,8 +18,11 @@ namespace PiRoverController.PresentationLogic.Tests
         [SetUp]
         public void ResetMocks()
         {
+            //should probably implement a stub CommandGenerator, rather than relying on Xamarin Forms implementation.
+
             commandGeneratorMock = new Mock<ICommandGenerator>();
             commandGeneratorMock.Setup(x => x.GenerateCommand(It.IsAny<Action>())).Returns((Action x) => { return new Command(x); });
+            commandGeneratorMock.Setup(x => x.GenerateCommand(It.IsAny<Action>(), It.IsAny<Func<bool>>())).Returns((Action x, Func<bool> func) => { return new Command(x, func); });
             settingAccessMock = new Mock<ISettingAccess>();
             navigatorMock = new Mock<INavigator>();
             httpClientMock = new Mock<IHTTPClient>();

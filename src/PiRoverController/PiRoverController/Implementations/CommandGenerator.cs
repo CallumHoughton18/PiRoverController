@@ -11,5 +11,10 @@ namespace PiRoverController.Implementations
         {
             return new Command(action);
         }
+
+        public ICommand GenerateCommand(Action action, Func<bool> canExecute)
+        {
+            return new Command(action, canExecute);
+        }
     }
 }
