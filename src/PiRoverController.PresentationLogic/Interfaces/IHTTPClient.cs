@@ -10,6 +10,6 @@ namespace PiRoverController.PresentationLogic.Interfaces
     {
         Task<HttpResponseMessage> GetAsync(Uri requestUri);
 
-        bool HostAvailable(string host);
+        Task<bool> HostAvailable(Uri baseUri);
     }
 }

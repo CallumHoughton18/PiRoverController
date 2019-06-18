@@ -21,7 +21,7 @@ namespace PiRoverController.UWP
         {
             this.InitializeComponent();
 
-            LoadApplication(new PiRoverController.App(new PlatformToast()));
+            LoadApplication(new PiRoverController.App(new PlatformToast(), new PingSolution()));
         }
     }
 }

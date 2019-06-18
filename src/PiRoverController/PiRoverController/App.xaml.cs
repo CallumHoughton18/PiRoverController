@@ -2,6 +2,7 @@
 using PiRoverController.Common.Interfaces;
 using PiRoverController.Factories;
 using PiRoverController.Implementations;
+using PiRoverController.Interfaces;
 using PiRoverController.PresentationLogic;
 using PiRoverController.PresentationLogic.Interfaces;
 using PiRoverController.SettingAccessSQL;
@@ -18,17 +19,21 @@ namespace PiRoverController
     {
         public IKernel Container { get; private set; }
 
-        public App(IPlatformToast platformToast)
+        public App(IPlatformToast platformToast):this(platformToast, new ServerConnection())
+        {
+        }
+
+        public App(IPlatformToast platformToast, IPingConnection pingConnection)
         {
             InitializeComponent();
             SetPlatformConfig();
             var settings = new NinjectSettings() { LoadExtensions = false };
             Container = new StandardKernel(settings);
-            ConfigureContainer(platformToast);
+            ConfigureContainer(platformToast, pingConnection);
             ComposeObjects();
         }
 
-        private void ConfigureContainer(IPlatformToast platformToast)
+        private void ConfigureContainer(IPlatformToast platformToast, IPingConnection pingConnection)
         {
             string databasePath = "";
             if (Device.RuntimePlatform == Device.UWP) databasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "database.db");
@@ -36,13 +41,15 @@ namespace PiRoverController
 
             Container.Bind<IPlatformToast>().ToConstant(platformToast);
 
+            Container.Bind<IPingConnection>().ToConstant(pingConnection);
+
             Container.Bind<ICommandGenerator>().To<CommandGenerator>()
                 .InSingletonScope();
 
             Container.Bind<ISettingAccess>().To<SettingReaderWriterSQL>()
                 .WithConstructorArgument<string>(databasePath);
 
-            Container.Bind<IHTTPClient>().To<HTTPClientService>();
+            Container.Bind<IHTTPClient>().To<HTTPClientService>().WithConstructorArgument("pingConnection", Container.Get<IPingConnection>());
 
             Container.Bind<IViewFactory>().To<ViewFactory>()
                 .InSingletonScope()

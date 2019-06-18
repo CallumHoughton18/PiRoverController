@@ -111,7 +111,16 @@ namespace PiRoverController.PresentationLogic
             _httpClient = httpClient;
             _popUps = popUps;
 
-            OnAppearingCommand = _commandGenerator.GenerateCommand(async () => await LoadData());
+            OnAppearingCommand = _commandGenerator.GenerateCommand(async () =>
+            {
+                LoadSettings();
+                if (_initLoad)
+                {
+                    await InitializeRover();
+                    _initLoad = false;
+                }
+            });
+
             GoForwardsCommand = _commandGenerator.GenerateCommand(async () => await DriveRover(RoverDriverInstructions.GoForwards));
             GoBackwardsCommand = _commandGenerator.GenerateCommand(async () => await DriveRover(RoverDriverInstructions.GoBackwards));
 
@@ -129,7 +138,6 @@ namespace PiRoverController.PresentationLogic
 
         public override void InitialLoad()
         {
-            //
         }
 
         private async Task GoToSettings()
@@ -137,7 +145,7 @@ namespace PiRoverController.PresentationLogic
             await _navigator.PushModalAsync<SettingsViewModel>();
         }
 
-        public async Task LoadData()
+        private void LoadSettings()
         {
             LoadingData = true;
             LoadingMessage = "Loading Setting...";
@@ -161,16 +169,31 @@ namespace PiRoverController.PresentationLogic
 
             _baseUri = new Uri(baseURLSetting.SettingValue);
 
-
-            if (_initLoad && _httpClient.HostAvailable(_baseUri.Host))
-            {
-                await InitGPIOs();
-                _initLoad = false;
-                RoverConnection = RoverConnection.Rover_Detected;
-            }
-
             LoadingMessage = "Done!";
             LoadingData = false;
+        }
+
+        private async Task InitializeRover()
+        {
+            RoverConnection = RoverConnection.Trying_To_Connect;
+            LoadingMessage = "Setting Up Rover...";
+            LoadingData = true;
+
+            var hostAvailable = await _httpClient.HostAvailable(_baseUri);
+            if (hostAvailable)
+            {
+                await InitGPIOs();
+                RoverConnection = RoverConnection.Rover_Detected;
+                LoadingMessage = "Rover Connected!";
+                LoadingData = false;
+            }
+            else
+            {
+                RoverConnection = RoverConnection.Not_Detected;
+                await Task.Delay(1000);
+                LoadingMessage = "Rover Not Found :(";
+                LoadingData = false;
+            }
         }
 
         private async Task DriveRover(RoverDriverInstructions roverInstruction)
@@ -226,21 +249,21 @@ namespace PiRoverController.PresentationLogic
                     try
                     {
                         Uri initUri = new Uri(_baseUri, requiredSetting.SettingValue);
-                        await _httpClient.GetAsync(initUri);
+                        var response = await _httpClient.GetAsync(initUri);
                     }
-                    catch (WebException e)
+                    catch (HttpRequestException)
                     {
-                        _popUps.ShowToast($"Request timed out to:{e.Response.ResponseUri.ToString()}");
+                        _popUps.ShowToast($"Request failed to:{requiredSetting.SettingValue}");
                     }
                 }
             }
         }
 
-        private void SetRoverConnectionStatus()
+        private async Task SetRoverConnectionStatus()
         {
-            RoverConnection =  RoverConnection.Trying_To_Connect;
+            RoverConnection = RoverConnection.Trying_To_Connect;
 
-            if (_httpClient.HostAvailable(BaseUri.Host))
+            if (await _httpClient.HostAvailable(BaseUri))
             {
                 RoverConnection = RoverConnection.Rover_Detected;
             }
