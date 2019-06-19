@@ -52,8 +52,8 @@ jobs:
   - task: NuGetCommand@2
     inputs:
       restoreSolution: '**/*.sln'
-  - task: XamarinAndroid@1
+  - task: VSBuild@1
     inputs:
-      projectFile: '**/*UWP*.csproj'
-      outputDirectory: '$(outputDirectory)'
+      solution: '**/PiRoverController.UWP.csproj'
       configuration: '$(buildConfiguration)'
+      msbuildArgs: '/p:AppxBundlePlatforms="$(buildPlatform)" /p:AppxPackageSigningEnabled=false'
