@@ -8,6 +8,9 @@ jobs:
     outputDirectory: '$(build.binariesDirectory)/$(buildConfiguration)'
   steps:
   - task: NuGetToolInstaller@0
+    inputs:
+     versionSpec: '4.3.0'
+     checkLatest: true 
   - task: NuGetCommand@2
     inputs:
       restoreSolution: '**/*.sln'
