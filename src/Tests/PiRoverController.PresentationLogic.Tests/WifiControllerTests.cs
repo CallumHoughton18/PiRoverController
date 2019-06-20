@@ -12,6 +12,8 @@ using System.Windows.Input;
 
 namespace PiRoverController.PresentationLogic.Tests
 {
+    [TestFixture]
+    [Category("unittests")]
     public class WifiControllerTests : BaseTests
     {
         [Test]

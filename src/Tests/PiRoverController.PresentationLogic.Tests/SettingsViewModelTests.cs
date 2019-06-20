@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace PiRoverController.PresentationLogic.Tests
 {
+    [TestFixture]
+    [Category("unittests")]
     public class SettingsViewModelTests : BaseTests
     {
         [Test]

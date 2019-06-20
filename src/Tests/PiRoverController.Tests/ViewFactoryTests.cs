@@ -14,6 +14,8 @@ namespace PiRoverController.Tests
 
     //It would probably be better to wrap ninject in my own IIoCContainer interface, so i can swap out the DI framework at ease. But as that's already more overkill
     //in an already over engineered solution I've opted to skip that, YAGNI and all.
+    [TestFixture]
+    [Category("unittests")]
     public class ViewFactoryTests
     {
         IKernel _container;
