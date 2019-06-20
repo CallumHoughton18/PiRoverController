@@ -88,3 +88,5 @@ jobs:
     inputs:
       platform: '$(buildPlatform)'
       configuration: '$(buildConfiguration)'
+      rerunFailedTests: true
+      rerunMaxAttempts: 3
