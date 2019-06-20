@@ -90,3 +90,4 @@ jobs:
       configuration: '$(buildConfiguration)'
       rerunFailedTests: true
       rerunMaxAttempts: 3
+      testFiltercriteria: Category=unittests
