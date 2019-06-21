@@ -173,10 +173,17 @@ namespace PiRoverController.PresentationLogic
             var baseURLSetting = GetSettingByID((int)SettingsIDs.BaseURL);
 
             if (baseURLSetting == null) throw new NullReferenceException("Base URL Setting not found...app will not be functional");
+            if (Uri.TryCreate(baseURLSetting.SettingValue, UriKind.Absolute, out _baseUri))
+            {
+                _baseUri = new Uri(baseURLSetting.SettingValue);
+                SetLoadingMessage("Done!", false);
+            }
+            else
+            {
+                SetLoadingMessage("BaseURL Formatting Error", false);
+                _platformToast.ShowToast($"Base URL {baseURLSetting.SettingValue} is an incorrect URL Format");
+            }
 
-            _baseUri = new Uri(baseURLSetting.SettingValue);
-
-            SetLoadingMessage("Done!", false);
         }
 
         private async Task InitializeRover()
@@ -213,14 +220,19 @@ namespace PiRoverController.PresentationLogic
                         instructionUri = new Uri(_baseUri, requiredSetting.SettingValue);
                         await _httpClient.GetAsync(instructionUri);
                     }
+                    catch (UriFormatException e)
+                    {
+                        _platformToast.ShowToast(e.Message);
+                    }
                     catch (HttpRequestException)
                     {
-                        _platformToast.ShowToast($"Request failed to: {instructionUri.ToString()}");
+                        _platformToast.ShowToast($"Request failed ({instructionUri.ToString()})");
                     }
                 }
             }
             else if (_settings.IsAddingCompleted == false) _platformToast.ShowToast("Still Loading Server Endpoints, Try Again.");
             else if (RoverConnection == RoverConnection.Trying_To_Connect) _platformToast.ShowToast("Cannot Drive - Trying to Connect to Rover");
+            else if (_baseUri == null) _platformToast.ShowToast("No base URL Found...is it in the Correct Format?");
 
         }
 
@@ -260,6 +272,10 @@ namespace PiRoverController.PresentationLogic
                     catch (HttpRequestException)
                     {
                         _platformToast.ShowToast($"Request failed to:{requiredSetting.SettingValue}"); //settings value is base uri tostring value.
+                    }
+                    catch (UriFormatException e)
+                    {
+                        _platformToast.ShowToast(e.Message);
                     }
                 }
             }

@@ -208,13 +208,51 @@ namespace PiRoverController.PresentationLogic.Tests
         public void CheckRoverConnection_ConnectionUnavailable()
         {
             httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult<bool>(false));
-            settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
+            settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetBadMockSettingsData());
             var sut = CreateViewModel();
             sut.OnAppearingCommand.Execute(null);
 
             sut.CheckRoverConnectionCommand.Execute(null);
 
             Assert.That(sut.RoverConnection, Is.EqualTo(RoverConnection.Not_Detected));
+        }
+
+        [Test]
+        public void InitGPIOs_WithBadUri()
+        {
+            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult(true)); //should never return true from bad uri, but best testing the case.
+            settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetBadMockSettingsData());
+            var sut = CreateViewModel();
+            sut.OnAppearingCommand.Execute(null);
+
+            PopUpsMock.Verify(x => x.ShowToast("Base URL httqwqdp://192.168.0._43422:80d80/ is an incorrect URL Format"), Times.Once);
+        }
+
+        [Test]
+        public void DriveRover_WithBadUri_AndbadBaseURI()
+        {
+            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult(true)); //should never return true from bad uri, but best testing the case.
+            settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetBadMockSettingsData());
+            var sut = CreateViewModel();
+            sut.OnAppearingCommand.Execute(null);
+
+            sut.GoForwardsCommand.Execute(null);
+            PopUpsMock.Verify(x => x.ShowToast("No base URL Found...is it in the Correct Format?"), Times.Once);
+        }
+
+        [Test]
+        public void DriveRover_WithBadUri_AndGoodBaseURI()
+        {
+            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult(true)); //should never return true from bad uri, but best testing the case.
+            var badSettings = TestHelper.GetBadMockSettingsData().ToList();
+            badSettings[0].SettingValue = "http://192.168.0.22:8080/";
+
+            settingAccessMock.Setup(x => x.GetSettings()).Returns(badSettings);
+            var sut = CreateViewModel();
+            sut.OnAppearingCommand.Execute(null);
+
+            sut.GoForwardsCommand.Execute(null);
+            //PopUpsMock.Verify(x => x.ShowToast("No base URL Found...is it in the Correct Format?"), Times.Once);
         }
 
         private WifiControllerViewModel CreateViewModel()
