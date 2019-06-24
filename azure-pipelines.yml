@@ -19,6 +19,8 @@ jobs:
       projectFile: '**/*droid*.csproj'
       outputDirectory: '$(outputDirectory)'
       configuration: '$(buildConfiguration)'
+      msbuildArguments: '/p:AndroidNdkDirectory=$(ANDROID_NDK_HOME)'
+      jdkVersionOption: 1.8
 
 - job: iOS
   pool:
