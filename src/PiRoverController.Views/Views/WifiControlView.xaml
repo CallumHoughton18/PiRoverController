@@ -6,13 +6,17 @@
              mc:Ignorable="d"
              xmlns:XamComponents="clr-namespace:PiRoverController.XamComponents;assembly=PiRoverController.XamComponents"
              xmlns:local="clr-namespace:PiRoverController.Views"
+             xmlns:ViewStyles="clr-namespace:PiRoverController.Views.Styles"
              x:Class="PiRoverController.Views.WifiControlView"
              Title="Rover Wifi Control">
     <ContentPage.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ViewStyles:MainStyle/>
+            </ResourceDictionary.MergedDictionaries>
             <local:RoverConnectionToTextConverter x:Key="RoverConnToText"/>
             <local:RoverConnectionToColourConverter x:Key="RoverConnToColour"/>
-            <!--=Add XamComponetns to dictionary for easier readability-->
+            <!--TODO:Add XamComponentss to dictionary for easier readability-->
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Behaviors>
@@ -35,7 +39,7 @@
             <FlexLayout JustifyContent="SpaceEvenly" AlignItems="Start" Direction="Row">
                 <Label Grid.ColumnSpan="2" Text="{Binding RoverConnection,Converter={StaticResource RoverConnToText}}"  TextColor="{Binding RoverConnection,Converter= {StaticResource RoverConnToColour}}"
                    HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" />
-                <Button Command="{Binding CheckRoverConnectionCommand}" Text="Ping"></Button>
+                <Button Command="{Binding CheckRoverConnectionCommand}" Style="{DynamicResource SyncButtonStyle}" Text="Ping"></Button>
             </FlexLayout>
             <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Orientation="Horizontal" Grid.Row="1">
                 <Button Text="Left">

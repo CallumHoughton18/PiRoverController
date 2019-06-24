@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    x:Class="PiRoverController.Views.Themes.LightTheme">
+
+    <!--Off White -->
+    <Color x:Key="PageBackgroundColor">#F6F6F6</Color>
+
+    <!--Rasberry-->
+    <Color x:Key="SecondaryColor">#CC1647</Color>
+
+    <!--White-->
+    <Color x:Key="SecondaryTextColor">#FFFFFF</Color>
+
+    <!--Light Raspberry-->
+    <Color x:Key="SecondaryTintColor">#E64C75</Color>
+
+    <!--Complimentary Green-->
+    <Color x:Key="SuccessColor">#3A8107</Color>
+
+    <!--Orange-->
+    <Color x:Key="InProgressColor">#FF6F00</Color>
+
+    <!--Dark Red-->
+    <Color x:Key="FailColor">#BC0000</Color>
+
+    <!--Black-->
+    <Color x:Key="TitleTextColor">#000000</Color>
+
+    <!--Black-->
+    <Color x:Key="EntryTextColor">#000000</Color>
+</ResourceDictionary>

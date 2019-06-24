@@ -66,6 +66,7 @@ namespace PiRoverController
         private void ComposeObjects()
         {
             MainPage = new Xamarin.Forms.NavigationPage(Container.Get<IViewFactory>().Resolve<WifiControllerViewModel>());
+            ((Xamarin.Forms.NavigationPage)MainPage).Style = (Style)Xamarin.Forms.Application.Current.Resources["NavPageStyle"];
         }
 
         public void SetPlatformConfig()
