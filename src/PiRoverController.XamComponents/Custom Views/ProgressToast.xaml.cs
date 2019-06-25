@@ -22,7 +22,7 @@ namespace PiRoverController.XamComponents
             set { base.SetValue(ProgressToastTextProperty, value); }
         }
 
-        public static readonly BindableProperty ProgressToastTextColorProperty = BindableProperty.Create("ProgressToastTextColor", returnType: typeof(Color), declaringType: typeof(ProgressToast), defaultValue: Color.White,
+        public static readonly BindableProperty ProgressToastTextColorProperty = BindableProperty.Create("ProgressToastTextColor", returnType: typeof(Color), declaringType: typeof(ProgressToast), defaultValue: Color.Black,
                                                                                               defaultBindingMode: BindingMode.TwoWay, propertyChanged: TextColourPropertyChanged);
         public Color ProgressToastTextColor
         {
@@ -39,18 +39,18 @@ namespace PiRoverController.XamComponents
         }
         public static readonly BindableProperty ProgressToastBackgroundOpacityProperty = BindableProperty.Create("ProgressToastBackgroundOpacity", returnType: typeof(double), declaringType: typeof(ProgressToast), defaultValue: 0.8D,
                                                                                         defaultBindingMode: BindingMode.TwoWay, propertyChanged: BackgroundOpacityPropertyChanged);
-
-        public Color ProgressToastActivityColor
-        {
-            get { return (Color)base.GetValue(BackgroundColorProperty); }
-            set { base.SetValue(BackgroundColorProperty, value); }
-        }
-        public static readonly BindableProperty ProgressToastActivityColorProperty = BindableProperty.Create("ProgressToastActivityColor", returnType: typeof(Color), declaringType: typeof(ProgressToast), defaultValue: Color.White,
-                                                                                        defaultBindingMode: BindingMode.TwoWay, propertyChanged: ActivityColorChanged);
         public double ProgressToastBackgroundOpacity
         {
             get { return (double)base.GetValue(ProgressToastBackgroundOpacityProperty); }
             set { base.SetValue(ProgressToastBackgroundOpacityProperty, value); }
+        }
+
+        public static readonly BindableProperty ProgressToastActivityColorProperty = BindableProperty.Create("ProgressToastActivityColor", returnType: typeof(Color), declaringType: typeof(ProgressToast), defaultValue: Color.Black,
+                                                                                        defaultBindingMode: BindingMode.TwoWay, propertyChanged: ActivityColorChanged);
+        public Color ProgressToastActivityColor
+        {
+            get { return (Color)base.GetValue(BackgroundColorProperty); }
+            set { base.SetValue(BackgroundColorProperty, value); }
         }
 
         public static readonly BindableProperty DisplayToastProperty = BindableProperty.Create("DisplayToast", returnType: typeof(bool), declaringType: typeof(ProgressToast), defaultValue: false,

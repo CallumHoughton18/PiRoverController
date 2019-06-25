@@ -2,18 +2,72 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     x:Class="PiRoverController.Views.Styles.MainStyle"
-                    xmlns:Themes="clr-namespace:PiRoverController.Views.Themes">
+                    xmlns:Themes="clr-namespace:PiRoverController.Views.Themes"
+                    xmlns:XamComponents="clr-namespace:PiRoverController.XamComponents;assembly=PiRoverController.XamComponents">
     <ResourceDictionary.MergedDictionaries>
         <Themes:LightTheme/>
     </ResourceDictionary.MergedDictionaries>
-    
+
+    <OnPlatform x:TypeArguments="x:String" 
+                x:Key="FontAwesomeBrands">
+        <On Platform="Android" 
+          Value="Font Awesome 5 Brands-Regular-400.otf#Font Awesome 5 Brands" />
+        <On Platform="iOS" 
+          Value="Font Awesome 5 Brands-Regular-400.otf#Font Awesome 5 Brands" />
+        <On Platform="UWP" 
+          Value="/Assets/Font Awesome 5 Brands-Regular-400.otf#Font Awesome 5 Brands" />
+    </OnPlatform>
+
+    <OnPlatform x:TypeArguments="x:String" 
+                x:Key="FontAwesomeSolid">
+        <On Platform="Android" 
+          Value="Font Awesome 5 Free-Solid-900.otf#Font Awesome 5 Free" />
+        <On Platform="iOS" 
+          Value="Font Awesome 5 Free-Solid-900.otf#Font Awesome 5 Free" />
+        <On Platform="UWP" 
+          Value="/Assets/Font Awesome 5 Free-Solid-900.otf#Font Awesome 5 Free" />
+    </OnPlatform>
+
+    <OnPlatform x:TypeArguments="x:String" 
+                x:Key="FontAwesomeRegular">
+        <On Platform="Android" 
+          Value="Font Awesome 5 Free-Regular-400.otf#Font Awesome 5 Free" />
+        <On Platform="iOS" 
+          Value="Font Awesome 5 Free-Regular-400.otf#Font Awesome 5 Free" />
+        <On Platform="UWP" 
+          Value="/Assets/Font Awesome 5 Free-Regular-400.otf#Font Awesome 5 Free" />
+    </OnPlatform>
+
     <Style x:Key="SyncButtonStyle" TargetType="Button">
         <Setter Property="TextColor" Value="{DynamicResource SecondaryTintColor}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolid}"/>
+        <Setter Property="Text" Value="&#xf021;"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="FontSize" Value="Medium"/>
     </Style>
 
     <Style x:Key="NavPageStyle" TargetType="NavigationPage">
         <Setter Property="BarBackgroundColor" Value="{DynamicResource SecondaryColor}"/>
         <Setter Property="BarTextColor" Value="{DynamicResource SecondaryTextColor}"/>
+    </Style>
+
+    <Style x:Key="ContentPageStyle" TargetType="ContentPage">
+        <Setter Property="BackgroundColor" Value="{DynamicResource PageBackgroundColor}"/>
+    </Style>
+
+    <Style x:Key="ListViewCellStyle" TargetType="StackLayout">
+        <Setter Property="Margin" Value="5,0,0,0"/>
+    </Style>
+    
+    <Style x:Key="HeadingTextStyle" TargetType="Label">
+        <Setter Property="FontAttributes" Value="Bold"/>
+        <Setter Property="FontSize" Value="Medium"/>
+    </Style>
+
+    <Style x:Key="ProgressToastStyle" TargetType="XamComponents:ProgressToast">
+        <Setter Property="ProgressToastActivityColor" Value="White"/>
+        <Setter Property="ProgressToastTextColor" Value="White"/>
+        <Setter Property="ProgressToastBackgroundColor" Value="#CC1647"/>
     </Style>
    
 </ResourceDictionary>

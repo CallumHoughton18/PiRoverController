@@ -66,6 +66,15 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <BundleResource Include="..\..\PiRoverController.Views\Assets\Font Awesome 5 Brands-Regular-400.otf">
+      <Link>Resources\Font Awesome 5 Brands-Regular-400.otf</Link>
+    </BundleResource>
+    <BundleResource Include="..\..\PiRoverController.Views\Assets\Font Awesome 5 Free-Regular-400.otf">
+      <Link>Resources\Font Awesome 5 Free-Regular-400.otf</Link>
+    </BundleResource>
+    <BundleResource Include="..\..\PiRoverController.Views\Assets\Font Awesome 5 Free-Solid-900.otf">
+      <Link>Resources\Font Awesome 5 Free-Solid-900.otf</Link>
+    </BundleResource>
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="PlatformToast.cs" />

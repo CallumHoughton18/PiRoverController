@@ -8,7 +8,8 @@
              xmlns:local="clr-namespace:PiRoverController.Views"
              xmlns:ViewStyles="clr-namespace:PiRoverController.Views.Styles"
              x:Class="PiRoverController.Views.WifiControlView"
-             Title="Rover Wifi Control">
+             Title="Rover Wifi Control"
+             Style="{DynamicResource ContentPageStyle}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -32,14 +33,15 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="0.1*"></RowDefinition>
-                <RowDefinition Height="0.8*"></RowDefinition>
+                <RowDefinition Height="0.2*"></RowDefinition>
+                <RowDefinition Height="0.7*"></RowDefinition>
                 <RowDefinition Height="0.1*"></RowDefinition>
             </Grid.RowDefinitions>
-            <FlexLayout JustifyContent="SpaceEvenly" AlignItems="Start" Direction="Row">
-                <Label Grid.ColumnSpan="2" Text="{Binding RoverConnection,Converter={StaticResource RoverConnToText}}"  TextColor="{Binding RoverConnection,Converter= {StaticResource RoverConnToColour}}"
+            <FlexLayout JustifyContent="SpaceEvenly" AlignItems="Start" Direction="Row" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand">
+                <Label Grid.ColumnSpan="2"  Style="{DynamicResource HeadingTextStyle}"
+                       Text="{Binding RoverConnection,Converter={StaticResource RoverConnToText}}"  TextColor="{Binding RoverConnection,Converter= {StaticResource RoverConnToColour}}"
                    HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" />
-                <Button Command="{Binding CheckRoverConnectionCommand}" Style="{DynamicResource SyncButtonStyle}" Text="Ping"></Button>
+                <Button Command="{Binding CheckRoverConnectionCommand}" Style="{DynamicResource SyncButtonStyle}" ></Button>
             </FlexLayout>
             <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Orientation="Horizontal" Grid.Row="1">
                 <Button Text="Left">
@@ -68,9 +70,9 @@
                     </Button.Behaviors>
                 </Button>
             </StackLayout>
-            <XamComponents:ProgressToast ProgressToastText="{Binding LoadingMessage}" ProgressToastBackgroundOpacity="0.7" ProgressToastTextColor="WhiteSmoke" ProgressToastBackgroundColor="Black"
-                                 DisplayToast="{Binding LoadingData}"  ProgressToastActivityColor="Blue"
-                                 Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" VerticalOptions="End" HorizontalOptions="Fill"/>
+            <XamComponents:ProgressToast ProgressToastText="{Binding LoadingMessage}" DisplayToast="{Binding LoadingData}"
+                                         Style="{DynamicResource ProgressToastStyle}"
+                                         Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" VerticalOptions="End" HorizontalOptions="Fill"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
