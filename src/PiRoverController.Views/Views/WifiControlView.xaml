@@ -6,14 +6,14 @@
              mc:Ignorable="d"
              xmlns:XamComponents="clr-namespace:PiRoverController.XamComponents;assembly=PiRoverController.XamComponents"
              xmlns:local="clr-namespace:PiRoverController.Views"
-             xmlns:ViewStyles="clr-namespace:PiRoverController.Views.Styles"
+             xmlns:viewstyles="clr-namespace:PiRoverController.Views.Styles"
              x:Class="PiRoverController.Views.WifiControlView"
              Title="Rover Wifi Control"
              Style="{DynamicResource ContentPageStyle}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ViewStyles:MainStyle/>
+                <viewstyles:MainStyle/>
             </ResourceDictionary.MergedDictionaries>
             <local:RoverConnectionToTextConverter x:Key="RoverConnToText"/>
             <local:RoverConnectionToColourConverter x:Key="RoverConnToColour"/>

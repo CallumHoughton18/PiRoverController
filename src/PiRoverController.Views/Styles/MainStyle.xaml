@@ -2,10 +2,11 @@
 <ResourceDictionary xmlns="http://xamarin.com/schemas/2014/forms" 
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     x:Class="PiRoverController.Views.Styles.MainStyle"
-                    xmlns:Themes="clr-namespace:PiRoverController.Views.Themes"
-                    xmlns:XamComponents="clr-namespace:PiRoverController.XamComponents;assembly=PiRoverController.XamComponents">
+                    xmlns:themes="clr-namespace:PiRoverController.Views.Themes"
+                    xmlns:fontawesome="clr-namespace:FontAwesome;assembly=PiRoverController.Common"
+                    xmlns:xamcomponents="clr-namespace:PiRoverController.XamComponents;assembly=PiRoverController.XamComponents">
     <ResourceDictionary.MergedDictionaries>
-        <Themes:LightTheme/>
+        <themes:LightTheme/>
     </ResourceDictionary.MergedDictionaries>
 
     <OnPlatform x:TypeArguments="x:String" 
@@ -41,7 +42,7 @@
     <Style x:Key="SyncButtonStyle" TargetType="Button">
         <Setter Property="TextColor" Value="{DynamicResource SecondaryTintColor}"/>
         <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolid}"/>
-        <Setter Property="Text" Value="&#xf021;"/>
+        <Setter Property="Text" Value="{x:Static fontawesome:FontAwesomeIcons.Sync}"/>
         <Setter Property="BackgroundColor" Value="Transparent"/>
         <Setter Property="FontSize" Value="Medium"/>
     </Style>
@@ -64,7 +65,7 @@
         <Setter Property="FontSize" Value="Medium"/>
     </Style>
 
-    <Style x:Key="ProgressToastStyle" TargetType="XamComponents:ProgressToast">
+    <Style x:Key="ProgressToastStyle" TargetType="xamcomponents:ProgressToast">
         <Setter Property="ProgressToastActivityColor" Value="White"/>
         <Setter Property="ProgressToastTextColor" Value="White"/>
         <Setter Property="ProgressToastBackgroundColor" Value="#CC1647"/>
