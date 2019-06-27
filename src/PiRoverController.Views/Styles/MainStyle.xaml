@@ -70,5 +70,13 @@
         <Setter Property="ProgressToastTextColor" Value="White"/>
         <Setter Property="ProgressToastBackgroundColor" Value="#CC1647"/>
     </Style>
+
+    <Style x:Key="ArrowImageButtonStyle" TargetType="ImageButton">
+        <Setter Property="Source" Value="Arrow.png"/>
+        <!--<Setter Property="HeightRequest" Value="160"/>
+        <Setter Property="WidthRequest" Value="160"/>-->
+        <Setter Property="Aspect" Value="AspectFit"/>
+        <!--<Setter Property="BackgroundColor" Value="Transparent"/>-->
+    </Style>
    
 </ResourceDictionary>

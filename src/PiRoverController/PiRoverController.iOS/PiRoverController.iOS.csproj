@@ -151,4 +151,9 @@
       <Name>PiRoverController</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="..\..\PiRoverController.Views\Images\Arrow.png">
+      <Link>Resources\Arrow.png</Link>
+    </BundleResource>
+  </ItemGroup>
 </Project>

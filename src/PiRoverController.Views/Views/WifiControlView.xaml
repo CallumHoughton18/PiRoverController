@@ -34,45 +34,56 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.2*"></RowDefinition>
-                <RowDefinition Height="0.7*"></RowDefinition>
-                <RowDefinition Height="0.1*"></RowDefinition>
+                <RowDefinition Height="0.8*"></RowDefinition>
             </Grid.RowDefinitions>
-            <FlexLayout JustifyContent="SpaceEvenly" AlignItems="Start" Direction="Row" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand">
-                <Label Grid.ColumnSpan="2"  Style="{DynamicResource HeadingTextStyle}"
+
+            <!--<FlexLayout JustifyContent="SpaceEvenly" AlignItems="Start" Direction="Row" VerticalOptions="StartAndExpand" HorizontalOptions="StartAndExpand">
+                <Label Style="{DynamicResource HeadingTextStyle}"
                        Text="{Binding RoverConnection,Converter={StaticResource RoverConnToText}}"  TextColor="{Binding RoverConnection,Converter= {StaticResource RoverConnToColour}}"
                    HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand" />
                 <Button Command="{Binding CheckRoverConnectionCommand}" Style="{DynamicResource SyncButtonStyle}" ></Button>
-            </FlexLayout>
-            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Orientation="Horizontal" Grid.Row="1">
-                <Button Text="Left">
-                    <Button.Behaviors>
-                        <XamComponents:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoLeftCommand}"></XamComponents:EventToCommandBehaviour>
-                    </Button.Behaviors>
-                </Button>
-                    <Button Text="Right">
-                    <Button.Behaviors>
-                        <XamComponents:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoRightCommand}"></XamComponents:EventToCommandBehaviour>
-                    </Button.Behaviors>
-                </Button>
-            </StackLayout>
+            </FlexLayout>-->
 
-            <StackLayout VerticalOptions="CenterAndExpand" HorizontalOptions="Center" Orientation="Vertical" Grid.Column="1" Grid.Row="1">
-                <Button Text="Forward">
-                    <Button.Behaviors>
-                        <XamComponents:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoForwardsCommand}"></XamComponents:EventToCommandBehaviour>
-                        <XamComponents:EventToCommandBehaviour EventName="Released" Command="{Binding StopForwardsAndBackwardCommand}"></XamComponents:EventToCommandBehaviour>
-                    </Button.Behaviors>
-                </Button>
-                <Button Text="Backward">
-                    <Button.Behaviors>
-                        <XamComponents:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoBackwardsCommand}"></XamComponents:EventToCommandBehaviour>
-                        <XamComponents:EventToCommandBehaviour EventName="Released" Command="{Binding StopForwardsAndBackwardCommand}"></XamComponents:EventToCommandBehaviour>
-                    </Button.Behaviors>
-                </Button>
-            </StackLayout>
-            <XamComponents:ProgressToast ProgressToastText="{Binding LoadingMessage}" DisplayToast="{Binding LoadingData}"
+            <RelativeLayout Grid.Row="1" Grid.ColumnSpan="2" VerticalOptions="Fill" HorizontalOptions="Fill">
+                <FlexLayout x:Name="ForwardsBackwardArrowContainer" AlignItems="Center" Direction="Column"
+                             RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.5}"
+                             RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5}">
+                    <ImageButton Style="{DynamicResource ArrowImageButtonStyle}" Rotation="180" x:Name="ForwardArrow">
+                        <ImageButton.Behaviors>
+                            <XamComponents:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoForwardsCommand}"></XamComponents:EventToCommandBehaviour>
+                            <XamComponents:EventToCommandBehaviour EventName="Released" Command="{Binding StopForwardsAndBackwardCommand}"></XamComponents:EventToCommandBehaviour>
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+
+                    <ImageButton Style="{DynamicResource ArrowImageButtonStyle}" x:Name="BackwardArrow">
+                        <ImageButton.Behaviors>
+                            <XamComponents:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoBackwardsCommand}"></XamComponents:EventToCommandBehaviour>
+                            <XamComponents:EventToCommandBehaviour EventName="Released" Command="{Binding StopForwardsAndBackwardCommand}"></XamComponents:EventToCommandBehaviour>
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                </FlexLayout>
+
+                <FlexLayout AlignContent="Center" AlignItems="Center" JustifyContent="Center" Direction="Row"
+                             RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5}"
+                             RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.5}"
+                             RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToView,ElementName=ForwardsBackwardArrowContainer, Property=Height, Factor=1}">
+                    <ImageButton Style="{DynamicResource ArrowImageButtonStyle}" Rotation="90" x:Name="LeftArrow">
+                        <ImageButton.Behaviors>
+                            <XamComponents:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoLeftCommand}"></XamComponents:EventToCommandBehaviour>
+                        </ImageButton.Behaviors>
+                    </ImageButton>
+                    <ImageButton Style="{DynamicResource ArrowImageButtonStyle}" Rotation="270" x:Name="RightArrow">
+                        <ImageButton.Behaviors>
+                        <XamComponents:EventToCommandBehaviour EventName="Pressed" Command="{Binding GoRightCommand}"></XamComponents:EventToCommandBehaviour>
+                    </ImageButton.Behaviors>
+                </ImageButton>
+                </FlexLayout>
+            </RelativeLayout>
+
+            <!--</FlexLayout>-->
+            <!--<XamComponents:ProgressToast ProgressToastText="{Binding LoadingMessage}" DisplayToast="{Binding LoadingData}"
                                          Style="{DynamicResource ProgressToastStyle}"
-                                         Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" VerticalOptions="End" HorizontalOptions="Fill"/>
+                                         Grid.Row="2" Grid.ColumnSpan="2" Grid.RowSpan="2" VerticalOptions="End" HorizontalOptions="Fill"/>-->
         </Grid>
     </ContentPage.Content>
 </ContentPage>

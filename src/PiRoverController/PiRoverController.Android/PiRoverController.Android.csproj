@@ -117,7 +117,6 @@
     <Folder Include="Resources\drawable-xhdpi\" />
     <Folder Include="Resources\drawable-xxhdpi\" />
     <Folder Include="Resources\drawable-xxxhdpi\" />
-    <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\PiRoverController.Common\PiRoverController.Common.csproj">
@@ -128,6 +127,11 @@
       <Project>{62AFF7A7-C1C4-4172-B443-E89554D7EC1D}</Project>
       <Name>PiRoverController</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="..\..\PiRoverController.Views\Images\Arrow.png">
+      <Link>Resources\drawable\Arrow.png</Link>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
