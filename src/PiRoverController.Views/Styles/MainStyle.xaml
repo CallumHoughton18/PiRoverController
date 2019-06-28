@@ -65,6 +65,29 @@
         <Setter Property="FontSize" Value="Medium"/>
     </Style>
 
+    <Style x:Key="CellHeaderTextStyle" TargetType="Label">
+        <Setter Property="FontSize" Value="Medium"/>
+        <Setter Property="TextColor" Value="Black"/>
+    </Style>
+
+    <Style x:Key="CellEntryBoxStyle" TargetType="Entry">
+        <Setter Property="FontSize" Value="Small"/>
+        <Setter Property="TextColor" Value="#696969"/>
+        
+    </Style>
+
+    <Style x:Key="BottomBarBoxViewStyle" TargetType="BoxView">
+        <Setter Property="BackgroundColor" Value="#CC1647"/>
+    </Style>
+
+    <Style x:Key="SaveButtonStyle" TargetType="Button">
+        <Setter Property="TextColor" Value="{DynamicResource PrimaryTintColor}"/>
+        <Setter Property="FontFamily" Value="{StaticResource FontAwesomeSolid}"/>
+        <Setter Property="Text" Value="{x:Static fontawesome:FontAwesomeIcons.Save}"/>
+        <Setter Property="BackgroundColor" Value="Transparent"/>
+        <Setter Property="FontSize" Value="Large"/>
+    </Style>
+
     <Style x:Key="ProgressToastStyle" TargetType="xamcomponents:ProgressToast">
         <Setter Property="ProgressToastActivityColor" Value="White"/>
         <Setter Property="ProgressToastTextColor" Value="White"/>
@@ -73,8 +96,6 @@
 
     <Style x:Key="ArrowImageButtonStyle" TargetType="ImageButton">
         <Setter Property="Source" Value="Arrow.png"/>
-        <!--<Setter Property="HeightRequest" Value="160"/>
-        <Setter Property="WidthRequest" Value="160"/>-->
         <Setter Property="Aspect" Value="AspectFit"/>
         <!--<Setter Property="BackgroundColor" Value="Transparent"/>-->
     </Style>

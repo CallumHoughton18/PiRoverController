@@ -5,12 +5,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:Local="clr-namespace:PiRoverController.XamComponents;assembly=PiRoverController.XamComponents"
-             x:Class="PiRoverController.Views.SettingsView">
+             xmlns:viewstyles="clr-namespace:PiRoverController.Views.Styles"
+             x:Class="PiRoverController.Views.SettingsView"
+             Style="{DynamicResource ContentPageStyle}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <viewstyles:MainStyle/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Behaviors>
         <Local:EventToCommandBehaviour EventName="Appearing" Command="{Binding OnAppearingCommand}"/>
     </ContentPage.Behaviors>
     <ContentPage.Content>
-        <Grid HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.9*"></RowDefinition>
                 <RowDefinition Height="0.1*"></RowDefinition>
@@ -19,15 +28,16 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Vertical" MinimumHeightRequest="80">
-                                <Label Text="{Binding SettingName}" FontSize="Medium" FontAttributes="Bold" TextColor="Black"/>
-                                <Entry Text="{Binding SettingValue, Mode=TwoWay}" HorizontalOptions="FillAndExpand"/>
+                            <StackLayout Orientation="Vertical" MinimumHeightRequest="80" Style="{DynamicResource ListViewCellStyle}">
+                                <Label Text="{Binding SettingName}" Style="{DynamicResource CellHeaderTextStyle}" />
+                                <Entry Text="{Binding SettingValue, Mode=TwoWay}" HorizontalOptions="FillAndExpand" Style="{DynamicResource CellEntryBoxStyle}"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Text="Save Settings" HorizontalOptions="Center" VerticalOptions="Center" Grid.Row="1" Command="{Binding SaveSettingsCommand}"/>
+            <BoxView Style="{DynamicResource BottomBarBoxViewStyle}" HorizontalOptions="Fill" VerticalOptions="Fill" Grid.Row="1"/>
+            <Button Style="{DynamicResource SaveButtonStyle}" HorizontalOptions="Center" VerticalOptions="CenterAndExpand" Grid.Row="1" Command="{Binding SaveSettingsCommand}"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -6,6 +6,9 @@
     <!--Off White -->
     <Color x:Key="PageBackgroundColor">#F6F6F6</Color>
 
+    <!--White-->
+    <Color x:Key="PrimaryTintColor">#FFFFFF</Color>
+
     <!--Rasberry-->
     <Color x:Key="SecondaryColor">#CC1647</Color>
 
