@@ -133,5 +133,10 @@
       <Link>Resources\drawable\Arrow.png</Link>
     </AndroidResource>
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="..\..\PiRoverController.Views\Images\cog.png">
+      <Link>Resources\drawable\cog.png</Link>
+    </AndroidResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

@@ -16,15 +16,14 @@
                 <viewstyles:MainStyle/>
             </ResourceDictionary.MergedDictionaries>
             <local:RoverConnectionToTextConverter x:Key="RoverConnToText"/>
-            <local:RoverConnectionToColourConverter x:Key="RoverConnToColour"/>
-            <!--TODO:Add XamComponentss to dictionary for easier readability-->
+            <local:RoverConnectionToColourConverter x:Key="RoverConnToColour" InProgressColor="{StaticResource InProgressColor}" FailureColor="{StaticResource FailColor}" SuccessColor="{StaticResource SuccessColor}"/>
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Behaviors>
         <XamComponents:EventToCommandBehaviour EventName="Appearing" Command="{Binding OnAppearingCommand}"/>
     </ContentPage.Behaviors>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Settings" Priority="0" Order="Primary" Command="{Binding GoToSettingsCommand}"/>
+        <ToolbarItem Icon="cog.png" Priority="0" Order="Primary" Command="{Binding GoToSettingsCommand}"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <Grid>
@@ -34,23 +33,23 @@
             </Grid.RowDefinitions>
 
                 <Label Style="{DynamicResource HeadingTextStyle}" VerticalOptions="Center" HorizontalOptions="Start"
-                       Text="{Binding RoverConnection,Converter={StaticResource RoverConnToText}}"  TextColor="{Binding RoverConnection,Converter= {StaticResource RoverConnToColour}}"  Margin="0,0,5,0"/>
-                <Button Command="{Binding CheckRoverConnectionCommand}" Style="{DynamicResource SyncButtonStyle}" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,5,0" ></Button>
+                       Text="{Binding RoverConnection,Converter={StaticResource RoverConnToText}}"  TextColor="{Binding RoverConnection,Converter= {StaticResource RoverConnToColour}}"  Margin="5,0"/>
+            <Button Command="{Binding CheckRoverConnectionCommand}" Style="{DynamicResource SyncButtonStyle}" Pressed="Animate_Sync_Button" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="5,0" ></Button>
            
             <Grid Grid.Row="1" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
                 <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1.7*"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="1.7*"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="1.7*"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
+                    <RowDefinition Height="1.7*"></RowDefinition>
+                    <RowDefinition Height="1.7*"></RowDefinition>
+                    <RowDefinition Height="1.7*"></RowDefinition>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
