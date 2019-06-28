@@ -6,5 +6,12 @@
     RequestedTheme="Light">
     <Application.Resources>
         <x:Double x:Key="AppBarExpandButtonThemeWidth">0</x:Double>
+        <SolidColorBrush x:Key="ButtonBackgroundPointerOver">Transparent</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonBackgroundPressed">Transparent</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonBorderBrushPointerOver">Transparent</SolidColorBrush>
+        <SolidColorBrush x:Key="ButtonBorderBrushPressed">Transparent</SolidColorBrush>
+        <SolidColorBrush x:Key="SystemControlHighlightListAccentLowBrush">Transparent</SolidColorBrush>
+        <SolidColorBrush x:Key="SystemControlHighlightListAccentMediumBrush">Transparent</SolidColorBrush>
+        <SolidColorBrush x:Key="SystemControlHighlightListAccentHighBrush">Transparent</SolidColorBrush>
     </Application.Resources>
 </Application>

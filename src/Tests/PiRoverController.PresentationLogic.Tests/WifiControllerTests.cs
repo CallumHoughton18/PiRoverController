@@ -154,41 +154,17 @@ namespace PiRoverController.PresentationLogic.Tests
         }
 
         [Test]
-        public void ResetDirectionLeft_Valid()
+        public void StopLeftAndRight_Valid()
         {
             httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult<bool>(true));
             settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
-            var expectedUri = new Uri("http://192.168.0.22:8080/RoverControls/left");
-            var expectedResetUri = new Uri("http://192.168.0.22:8080/RoverControls/stopLeftAndRight");
+            var expectedUri = new Uri("http://192.168.0.22:8080/RoverControls/stopLeftAndRight");
             var sut = CreateViewModel();
             sut.OnAppearingCommand.Execute(null);
 
-            sut.GoLeftCommand.Execute(null);
+            sut.StopLeftAndRightCommand.Execute(null);
 
             httpClientMock.Verify(x => x.GetAsync(expectedUri), Times.Once);
-
-            sut.GoLeftCommand.Execute(null);
-
-            httpClientMock.Verify(x => x.GetAsync(expectedResetUri), Times.Once);
-        }
-
-        [Test]
-        public void ResetDirectionRight_Valid()
-        {
-            httpClientMock.Setup(x => x.HostAvailable(It.IsAny<Uri>())).Returns(Task.FromResult<bool>(true));
-            settingAccessMock.Setup(x => x.GetSettings()).Returns(TestHelper.GetMockSettingsData());
-            var expectedUri = new Uri("http://192.168.0.22:8080/RoverControls/right");
-            var expectedResetUri = new Uri("http://192.168.0.22:8080/RoverControls/stopLeftAndRight");
-            var sut = CreateViewModel();
-            sut.OnAppearingCommand.Execute(null);
-
-            sut.GoRightCommand.Execute(null);
-
-            httpClientMock.Verify(x => x.GetAsync(expectedUri), Times.Once);
-
-            sut.GoRightCommand.Execute(null);
-
-            httpClientMock.Verify(x => x.GetAsync(expectedResetUri), Times.Once);
         }
 
         [Test]

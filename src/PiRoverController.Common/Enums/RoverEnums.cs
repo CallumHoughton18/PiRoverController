@@ -14,10 +14,4 @@ namespace PiRoverController.Common.Enums
         StopLeftAndRight = SettingsIDs.StopLeftAndRight,
         StopAll = SettingsIDs.StopAll
     }
-    public enum RoverDirection
-    {
-        None,
-        Left,
-        Right,
-    }
 }

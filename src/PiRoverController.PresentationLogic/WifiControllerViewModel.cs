@@ -24,7 +24,6 @@ namespace PiRoverController.PresentationLogic
         private readonly IPlatformToast _platformToast;
         private readonly object _roverDirectionLock = new object();
 
-        private RoverDirection _currentRoverDirection = RoverDirection.None; //rover should start off motionless.
         private bool _initLoad = true;
 
         private RoverConnection _roverConnection = RoverConnection.Not_Detected;
@@ -101,6 +100,7 @@ namespace PiRoverController.PresentationLogic
         public ICommand GoLeftCommand { get; private set; }
         public ICommand GoRightCommand { get; private set; }
         public ICommand StopForwardsAndBackwardCommand { get; private set; }
+        public ICommand StopLeftAndRightCommand { get; private set; }
         public ICommand CheckRoverConnectionCommand { get; private set; }
         public ICommand GoToSettingsCommand { get; private set; }
 
@@ -132,16 +132,10 @@ namespace PiRoverController.PresentationLogic
 
             GoForwardsCommand = _commandGenerator.GenerateCommand(async () => await DriveRover(RoverDriverInstructions.GoForwards));
             GoBackwardsCommand = _commandGenerator.GenerateCommand(async () => await DriveRover(RoverDriverInstructions.GoBackwards));
-
-            GoLeftCommand = _commandGenerator.GenerateCommand(async () =>
-            {
-                await SetRoverDirection(RoverDriverInstructions.GoLeft, RoverDirection.Left);
-            });
-            GoRightCommand = _commandGenerator.GenerateCommand(async () =>
-            {
-                await SetRoverDirection(RoverDriverInstructions.GoRight, RoverDirection.Right);
-            });
+            GoLeftCommand = _commandGenerator.GenerateCommand(async () => await DriveRover(RoverDriverInstructions.GoLeft));
+            GoRightCommand = _commandGenerator.GenerateCommand(async () => await DriveRover(RoverDriverInstructions.GoRight));
             StopForwardsAndBackwardCommand = _commandGenerator.GenerateCommand(async () => await DriveRover(RoverDriverInstructions.StopFowardsAndBackwards));
+            StopLeftAndRightCommand = _commandGenerator.GenerateCommand(async () => await DriveRover(RoverDriverInstructions.StopLeftAndRight));
             GoToSettingsCommand = _commandGenerator.GenerateCommand(async () => await GoToSettings());
             CheckRoverConnectionCommand = _commandGenerator.GenerateCommand(async () => await SetRoverConnectionStatus());
         }
@@ -235,28 +229,6 @@ namespace PiRoverController.PresentationLogic
             else if (_baseUri == null) _platformToast.ShowToast("No base URL Found...is it in the Correct Format?");
 
         }
-
-
-        private async Task SetRoverDirection(RoverDriverInstructions roverInstruction, RoverDirection requestedDirection)
-        {
-            if (_currentRoverDirection != requestedDirection)
-            {
-                await DriveRover(roverInstruction);
-                lock (_roverDirectionLock)
-                {
-                    _currentRoverDirection = requestedDirection;
-                }
-            }
-            else
-            {
-                await DriveRover(RoverDriverInstructions.StopLeftAndRight);
-                lock (_roverDirectionLock)
-                {
-                    _currentRoverDirection = RoverDirection.None;
-                }
-            }
-        }
-
         private async Task InitGPIOs()
         {
             if (_settings.IsAddingCompleted && _baseUri != null)
