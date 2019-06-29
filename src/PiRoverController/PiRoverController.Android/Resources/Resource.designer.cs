@@ -3368,44 +3368,44 @@ namespace PiRoverController.Droid
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f0e004f
-			public const int abc_background_cache_hint_selector_material_dark = 2131624015;
-			
 			// aapt resource value: 0x7f0e0050
-			public const int abc_background_cache_hint_selector_material_light = 2131624016;
+			public const int abc_background_cache_hint_selector_material_dark = 2131624016;
 			
 			// aapt resource value: 0x7f0e0051
-			public const int abc_btn_colored_borderless_text_material = 2131624017;
+			public const int abc_background_cache_hint_selector_material_light = 2131624017;
 			
 			// aapt resource value: 0x7f0e0052
-			public const int abc_btn_colored_text_material = 2131624018;
+			public const int abc_btn_colored_borderless_text_material = 2131624018;
 			
 			// aapt resource value: 0x7f0e0053
-			public const int abc_color_highlight_material = 2131624019;
+			public const int abc_btn_colored_text_material = 2131624019;
 			
 			// aapt resource value: 0x7f0e0054
-			public const int abc_hint_foreground_material_dark = 2131624020;
+			public const int abc_color_highlight_material = 2131624020;
 			
 			// aapt resource value: 0x7f0e0055
-			public const int abc_hint_foreground_material_light = 2131624021;
+			public const int abc_hint_foreground_material_dark = 2131624021;
+			
+			// aapt resource value: 0x7f0e0056
+			public const int abc_hint_foreground_material_light = 2131624022;
 			
 			// aapt resource value: 0x7f0e0004
 			public const int abc_input_method_navigation_guard = 2131623940;
 			
-			// aapt resource value: 0x7f0e0056
-			public const int abc_primary_text_disable_only_material_dark = 2131624022;
-			
 			// aapt resource value: 0x7f0e0057
-			public const int abc_primary_text_disable_only_material_light = 2131624023;
+			public const int abc_primary_text_disable_only_material_dark = 2131624023;
 			
 			// aapt resource value: 0x7f0e0058
-			public const int abc_primary_text_material_dark = 2131624024;
+			public const int abc_primary_text_disable_only_material_light = 2131624024;
 			
 			// aapt resource value: 0x7f0e0059
-			public const int abc_primary_text_material_light = 2131624025;
+			public const int abc_primary_text_material_dark = 2131624025;
 			
 			// aapt resource value: 0x7f0e005a
-			public const int abc_search_url_text = 2131624026;
+			public const int abc_primary_text_material_light = 2131624026;
+			
+			// aapt resource value: 0x7f0e005b
+			public const int abc_search_url_text = 2131624027;
 			
 			// aapt resource value: 0x7f0e0005
 			public const int abc_search_url_text_normal = 2131623941;
@@ -3416,29 +3416,29 @@ namespace PiRoverController.Droid
 			// aapt resource value: 0x7f0e0007
 			public const int abc_search_url_text_selected = 2131623943;
 			
-			// aapt resource value: 0x7f0e005b
-			public const int abc_secondary_text_material_dark = 2131624027;
-			
 			// aapt resource value: 0x7f0e005c
-			public const int abc_secondary_text_material_light = 2131624028;
+			public const int abc_secondary_text_material_dark = 2131624028;
 			
 			// aapt resource value: 0x7f0e005d
-			public const int abc_tint_btn_checkable = 2131624029;
+			public const int abc_secondary_text_material_light = 2131624029;
 			
 			// aapt resource value: 0x7f0e005e
-			public const int abc_tint_default = 2131624030;
+			public const int abc_tint_btn_checkable = 2131624030;
 			
 			// aapt resource value: 0x7f0e005f
-			public const int abc_tint_edittext = 2131624031;
+			public const int abc_tint_default = 2131624031;
 			
 			// aapt resource value: 0x7f0e0060
-			public const int abc_tint_seek_thumb = 2131624032;
+			public const int abc_tint_edittext = 2131624032;
 			
 			// aapt resource value: 0x7f0e0061
-			public const int abc_tint_spinner = 2131624033;
+			public const int abc_tint_seek_thumb = 2131624033;
 			
 			// aapt resource value: 0x7f0e0062
-			public const int abc_tint_switch_track = 2131624034;
+			public const int abc_tint_spinner = 2131624034;
+			
+			// aapt resource value: 0x7f0e0063
+			public const int abc_tint_switch_track = 2131624035;
 			
 			// aapt resource value: 0x7f0e0008
 			public const int accent_material_dark = 2131623944;
@@ -3506,8 +3506,8 @@ namespace PiRoverController.Droid
 			// aapt resource value: 0x7f0e0040
 			public const int design_bottom_navigation_shadow_color = 2131624000;
 			
-			// aapt resource value: 0x7f0e0063
-			public const int design_error = 2131624035;
+			// aapt resource value: 0x7f0e0064
+			public const int design_error = 2131624036;
 			
 			// aapt resource value: 0x7f0e0041
 			public const int design_fab_shadow_end_color = 2131624001;
@@ -3533,8 +3533,8 @@ namespace PiRoverController.Droid
 			// aapt resource value: 0x7f0e0048
 			public const int design_snackbar_background_color = 2131624008;
 			
-			// aapt resource value: 0x7f0e0064
-			public const int design_tint_password_toggle = 2131624036;
+			// aapt resource value: 0x7f0e0065
+			public const int design_tint_password_toggle = 2131624037;
 			
 			// aapt resource value: 0x7f0e0016
 			public const int dim_foreground_disabled_material_dark = 2131623958;
@@ -3653,17 +3653,20 @@ namespace PiRoverController.Droid
 			// aapt resource value: 0x7f0e0038
 			public const int secondary_text_disabled_material_light = 2131623992;
 			
+			// aapt resource value: 0x7f0e004f
+			public const int splash_background = 2131624015;
+			
 			// aapt resource value: 0x7f0e0039
 			public const int switch_thumb_disabled_material_dark = 2131623993;
 			
 			// aapt resource value: 0x7f0e003a
 			public const int switch_thumb_disabled_material_light = 2131623994;
 			
-			// aapt resource value: 0x7f0e0065
-			public const int switch_thumb_material_dark = 2131624037;
-			
 			// aapt resource value: 0x7f0e0066
-			public const int switch_thumb_material_light = 2131624038;
+			public const int switch_thumb_material_dark = 2131624038;
+			
+			// aapt resource value: 0x7f0e0067
+			public const int switch_thumb_material_light = 2131624039;
 			
 			// aapt resource value: 0x7f0e003b
 			public const int switch_thumb_normal_material_dark = 2131623995;
@@ -4450,26 +4453,26 @@ namespace PiRoverController.Droid
 			// aapt resource value: 0x7f020054
 			public const int avd_hide_password = 2130837588;
 			
-			// aapt resource value: 0x7f020131
-			public const int avd_hide_password_1 = 2130837809;
-			
 			// aapt resource value: 0x7f020132
-			public const int avd_hide_password_2 = 2130837810;
+			public const int avd_hide_password_1 = 2130837810;
 			
 			// aapt resource value: 0x7f020133
-			public const int avd_hide_password_3 = 2130837811;
+			public const int avd_hide_password_2 = 2130837811;
+			
+			// aapt resource value: 0x7f020134
+			public const int avd_hide_password_3 = 2130837812;
 			
 			// aapt resource value: 0x7f020055
 			public const int avd_show_password = 2130837589;
 			
-			// aapt resource value: 0x7f020134
-			public const int avd_show_password_1 = 2130837812;
-			
 			// aapt resource value: 0x7f020135
-			public const int avd_show_password_2 = 2130837813;
+			public const int avd_show_password_1 = 2130837813;
 			
 			// aapt resource value: 0x7f020136
-			public const int avd_show_password_3 = 2130837814;
+			public const int avd_show_password_2 = 2130837814;
+			
+			// aapt resource value: 0x7f020137
+			public const int avd_show_password_3 = 2130837815;
 			
 			// aapt resource value: 0x7f020056
 			public const int cog = 2130837590;
@@ -5110,11 +5113,11 @@ namespace PiRoverController.Droid
 			// aapt resource value: 0x7f02012a
 			public const int notification_icon_background = 2130837802;
 			
-			// aapt resource value: 0x7f02012f
-			public const int notification_template_icon_bg = 2130837807;
-			
 			// aapt resource value: 0x7f020130
-			public const int notification_template_icon_low_bg = 2130837808;
+			public const int notification_template_icon_bg = 2130837808;
+			
+			// aapt resource value: 0x7f020131
+			public const int notification_template_icon_low_bg = 2130837809;
 			
 			// aapt resource value: 0x7f02012b
 			public const int notification_tile_bg = 2130837803;
@@ -5123,10 +5126,13 @@ namespace PiRoverController.Droid
 			public const int notify_panel_notification_icon_bg = 2130837804;
 			
 			// aapt resource value: 0x7f02012d
-			public const int tooltip_frame_dark = 2130837805;
+			public const int splashscreen = 2130837805;
 			
 			// aapt resource value: 0x7f02012e
-			public const int tooltip_frame_light = 2130837806;
+			public const int tooltip_frame_dark = 2130837806;
+			
+			// aapt resource value: 0x7f02012f
+			public const int tooltip_frame_light = 2130837807;
 			
 			static Drawable()
 			{
@@ -6105,9 +6111,6 @@ namespace PiRoverController.Droid
 			// aapt resource value: 0x7f030002
 			public const int launcher_foreground = 2130903042;
 			
-			// aapt resource value: 0x7f030003
-			public const int screen = 2130903043;
-			
 			static Mipmap()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -6841,6 +6844,15 @@ namespace PiRoverController.Droid
 			
 			// aapt resource value: 0x7f0d0190
 			public const int MainTheme_Base = 2131558800;
+			
+			// aapt resource value: 0x7f0d0193
+			public const int MyTheme = 2131558803;
+			
+			// aapt resource value: 0x7f0d0192
+			public const int MyTheme_Base = 2131558802;
+			
+			// aapt resource value: 0x7f0d0194
+			public const int MyTheme_Splash = 2131558804;
 			
 			// aapt resource value: 0x7f0d002d
 			public const int Platform_AppCompat = 2131558445;

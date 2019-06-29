@@ -30,7 +30,7 @@
                         <ViewCell>
                             <StackLayout Orientation="Vertical" MinimumHeightRequest="80" Style="{DynamicResource ListViewCellStyle}">
                                 <Label Text="{Binding SettingName}" Style="{DynamicResource CellHeaderTextStyle}" />
-                                <Editor Text="{Binding SettingValue, Mode=TwoWay}" HorizontalOptions="FillAndExpand" Style="{DynamicResource CellEditorStyle}"/>
+                                <Editor HeightRequest="40" Text="{Binding SettingValue, Mode=TwoWay}" HorizontalOptions="FillAndExpand" Style="{DynamicResource CellEditorStyle}"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
