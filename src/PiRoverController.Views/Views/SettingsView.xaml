@@ -24,13 +24,13 @@
                 <RowDefinition Height="0.9*"></RowDefinition>
                 <RowDefinition Height="0.1*"></RowDefinition>
             </Grid.RowDefinitions>
-            <ListView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="10,5" HasUnevenRows="True" ItemsSource="{Binding Settings}">
+            <ListView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Margin="10,5" HasUnevenRows="True" ItemsSource="{Binding Settings}" SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Vertical" MinimumHeightRequest="80" Style="{DynamicResource ListViewCellStyle}">
                                 <Label Text="{Binding SettingName}" Style="{DynamicResource CellHeaderTextStyle}" />
-                                <Entry Text="{Binding SettingValue, Mode=TwoWay}" HorizontalOptions="FillAndExpand" Style="{DynamicResource CellEntryBoxStyle}"/>
+                                <Editor Text="{Binding SettingValue, Mode=TwoWay}" HorizontalOptions="FillAndExpand" Style="{DynamicResource CellEditorStyle}"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

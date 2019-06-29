@@ -70,7 +70,7 @@
         <Setter Property="TextColor" Value="Black"/>
     </Style>
 
-    <Style x:Key="CellEntryBoxStyle" TargetType="Entry">
+    <Style x:Key="CellEditorStyle" TargetType="Editor">
         <Setter Property="FontSize" Value="Small"/>
         <Setter Property="TextColor" Value="#696969"/>
         
