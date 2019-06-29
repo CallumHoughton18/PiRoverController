@@ -4,7 +4,7 @@ Master Build Status:
 
 [![Build Status](https://dev.azure.com/callumhoughton13/callumhoughton13/_apis/build/status/CallumHoughton18.PiRoverController?branchName=master)](https://dev.azure.com/callumhoughton13/callumhoughton13/_build/latest?definitionId=3&branchName=master)
 
-![](C:\Projects\PiRoverController\docs\images\AndroidMockup.png)A Xamarin Forms cross platform application used to issue commands to a webserver to control the GPIOs on a Raspberry to drive a rover. 
+![](<https://raw.githubusercontent.com/CallumHoughton18/PiRoverController/master/docs/images/AndroidMockup.png>)A Xamarin Forms cross platform application used to issue commands to a webserver to control the GPIOs on a Raspberry to drive a rover. 
 The web server to be deployed on the Raspberry Pi can be found [here](<https://github.com/CallumHoughton18/PiRoverWebServer>).
 
 ## Demo Video
